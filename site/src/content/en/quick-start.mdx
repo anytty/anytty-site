@@ -1,0 +1,52 @@
+---
+title: Quick start
+description: Install AnyTTY, start a local daemon, and open your first terminal.
+---
+
+# Quick start
+
+Install the current beta, start the daemon for your user, and open the TUI. From there you can create terminals, attach to them later, and manage them from the CLI or mobile app.
+
+## Install
+
+On macOS or Linux, the installer downloads the matching release archive and verifies its SHA-256 checksum:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/anytty/anytty-site/main/install.sh | sh
+```
+
+On Windows PowerShell:
+
+```powershell
+Invoke-WebRequest https://raw.githubusercontent.com/anytty/anytty-site/main/install.ps1 -OutFile install.ps1
+.\install.ps1
+```
+
+## Run locally
+
+```sh
+anytty daemon start
+anytty
+```
+
+The second command opens the TUI and connects to the local daemon. To create a shell and attach directly from the CLI:
+
+```sh
+anytty terminal create --name workspace --attach -- zsh
+```
+
+## Build from source
+
+Source builds require Go 1.26.5, Node.js 24, and npm.
+
+```sh
+git clone https://github.com/anytty/anytty-site.git
+cd anytty-site
+npm ci
+make build
+make test
+make test-clients
+npm run public:check
+```
+
+> **Want to work on another machine?** Use SSH when you already have host access, or pair a Direct/Cloud-capable service and save it as an endpoint.

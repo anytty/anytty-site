@@ -1,0 +1,14 @@
+{
+  "name": "anytty-site",
+  "version": "0.0.1-beta.0",
+  "private": true,
+  "workspaces": [
+    "site"
+  ],
+  "scripts": {
+    "site:dev": "npm run dev --workspace @anytty/site",
+    "site:build": "npm run build --workspace @anytty/site",
+    "site:check": "npm run site:build && node scripts/check-public-repository.mjs --site-only",
+    "site:preview": "npm run preview --workspace @anytty/site"
+  }
+}
