@@ -50,7 +50,7 @@ jobs:
           ANYTTY_SITE_BASE_PATH: ${{ steps.site-mode.outputs.base_path }}
           PUBLIC_ANYTTY_SITE_URL: ${{ steps.site-mode.outputs.site_url }}
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site/dist
   deploy:
