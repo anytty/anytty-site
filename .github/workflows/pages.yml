@@ -49,7 +49,7 @@ jobs:
           ANYTTY_SITE_CUSTOM_DOMAIN: ${{ steps.site-mode.outputs.custom_domain }}
           ANYTTY_SITE_BASE_PATH: ${{ steps.site-mode.outputs.base_path }}
           PUBLIC_ANYTTY_SITE_URL: ${{ steps.site-mode.outputs.site_url }}
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
