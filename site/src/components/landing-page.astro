@@ -63,6 +63,19 @@ const copy = {
       ['Let agents use the connection you already made', 'They can work in an authorized TTY instead of setting up SSH, tunnels, and routes again.'],
       ['Each machine keeps its own permissions', 'AnyTTY gets you to the TTY. The daemon on that machine still decides what the TTY and file browser can access.'],
     ],
+    agentEyebrow: 'Coding agents', agentTitle: 'Give agents a real terminal, and give your tools a way in.',
+    agentLead: 'Claude Code, Codex, OpenCode, or any other agent that runs in a terminal can run inside a persistent AnyTTY TTY. Your own scripts or an external agent framework can create terminals, send input, capture output, wait for lifecycle changes, and follow live streams through the CLI and API.',
+    agentPoints: [
+      ['The TTY is the execution surface', 'The agent keeps running on its endpoint when you close the TUI, switch clients, or move to another machine.'],
+      ['Automation can take the controls', 'Machine-readable commands and protocol APIs expose terminal input, output, history, lifecycle events, and resize control.'],
+      ['See which tasks still have activity', 'Every terminal exposes the time of its latest non-empty output, giving an external controller a lightweight activity indicator.'],
+    ],
+    agentDiagram: {
+      controller: 'Your script / agent framework', interface: 'AnyTTY CLI · API',
+      commands: 'create · send · capture · wait · stream · events',
+      terminals: [['local:codex', 'macOS', '12s since output'], ['win:claude', 'Windows', 'working'], ['build:opencode', 'Linux', '3m since output']],
+      observe: 'Observe and take over', clients: 'TUI · Web · Mobile',
+    },
     platformEyebrow: 'Native Windows · macOS · Linux', platformTitle: 'Windows deserves a good terminal multiplexer too.',
     platformLead: 'The CLI, TUI, and daemon run natively on Windows x64 and ARM64. You do not need WSL to get started. The same workflow also runs on macOS and Linux.',
     platformPoints: [
@@ -160,6 +173,19 @@ const copy = {
       ['Agent 不用再折腾连接', '连接已经在 workspace 里准备好了。Agent 直接使用授权过的 TTY，不必重复配置 SSH、隧道和路由。'],
       ['权限还是各台机器说了算', 'AnyTTY 负责把你带到 TTY；能看哪些文件、能做什么，仍由那台机器上的 daemon 决定。'],
     ],
+    agentEyebrow: 'Coding agents', agentTitle: '让 Agent 跑进真正的终端，也让外部工具接得进来。',
+    agentLead: 'Claude Code、Codex、OpenCode，或者任何能在终端里运行的 Agent，都可以直接跑在 AnyTTY 的持久 TTY 里。你自己的脚本或外部 Agent 框架，也能通过 CLI 和 API 创建终端、发送输入、读取输出、等待状态变化，或者持续跟踪输出。',
+    agentPoints: [
+      ['TTY 就是 Agent 的执行面', '关掉 TUI、换个客户端，或者换台电脑，Agent 仍然留在原 endpoint 上继续运行。'],
+      ['外部自动化可以直接接管', '机器可读的命令与协议 API 已经覆盖终端输入、输出、历史、生命周期事件和尺寸控制。'],
+      ['看看哪些任务还有动静', '每个 terminal 都会暴露最近一次非空输出的时间，外部控制器可以据此快速判断任务是否还有动静。'],
+    ],
+    agentDiagram: {
+      controller: '你的脚本 / Agent 框架', interface: 'AnyTTY CLI · API',
+      commands: 'create · send · capture · wait · stream · events',
+      terminals: [['local:codex', 'macOS', '12 秒前有输出'], ['win:claude', 'Windows', '运行中'], ['build:opencode', 'Linux', '3 分钟前有输出']],
+      observe: '观察并随时接手', clients: 'TUI · Web · 手机 App',
+    },
     platformEyebrow: '原生 Windows · macOS · Linux', platformTitle: 'Windows 上，也该有一个顺手的终端复用器。',
     platformLead: 'CLI、TUI 和 daemon 都有 Windows x64 / ARM64 原生版本，装上就能跑，不用先准备 WSL。同一套用法也支持 macOS 和 Linux。',
     platformPoints: [
@@ -382,6 +408,54 @@ const viewIcons = [PanelsTopLeft, TerminalSquare, Laptop, Smartphone]
                   <p class="mt-1 truncate font-mono text-[9px] text-zinc-500 sm:text-[10px]">{route}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+
+        <div id="agents" class="scroll-mt-20 mt-20 border-t border-[var(--line)] pt-20 sm:mt-24 sm:pt-24 lg:mt-28 lg:pt-28" aria-labelledby="agent-title">
+          <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
+            <div>
+              <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.agentEyebrow}</Badge>
+              <h2 id="agent-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.agentTitle}</h2>
+              <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.agentLead}</p>
+              <div class="mt-8 grid gap-5">
+                {t.agentPoints.map(([title, body]) => (
+                  <div class="border-l border-[var(--line-strong)] py-0.5 pl-4">
+                    <h3 class="text-sm font-medium">{title}</h3>
+                    <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl bg-zinc-950 ring-1 ring-[var(--line)]" aria-label={t.agentTitle}>
+              <div class="border-b border-[var(--line)] p-5 sm:p-6">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <span class="text-sm font-medium text-zinc-200">{t.agentDiagram.controller}</span>
+                  <span class="font-mono text-[10px] text-sky-300">{t.agentDiagram.interface}</span>
+                </div>
+                <div class="mt-4 rounded-md bg-zinc-900 px-3 py-2.5 font-mono text-[10px] leading-5 text-zinc-400 ring-1 ring-[var(--line)]">{t.agentDiagram.commands}</div>
+              </div>
+
+              <div class="relative p-5 sm:p-6">
+                <div class="absolute left-8 top-0 h-5 w-px bg-[var(--line-strong)] sm:left-9" aria-hidden="true" />
+                <div class="grid gap-2.5">
+                  {t.agentDiagram.terminals.map(([terminal, endpoint, activity], index) => (
+                    <div class="grid min-w-0 grid-cols-[1fr_auto] items-center gap-3 rounded-lg bg-zinc-900 px-3 py-3 ring-1 ring-[var(--line)] sm:grid-cols-[1fr_0.7fr_auto] sm:px-4">
+                      <span class="min-w-0 truncate font-mono text-[11px] text-zinc-200">$ {terminal}</span>
+                      <span class="hidden truncate font-mono text-[10px] text-zinc-500 sm:block">{endpoint} endpoint</span>
+                      <span class="flex items-center justify-end gap-2 whitespace-nowrap font-mono text-[10px] text-zinc-400">
+                        <span class={cn('size-1.5 rounded-full', index === 1 ? 'bg-emerald-400' : 'bg-zinc-500')} />{activity}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-1 border-t border-[var(--line)] bg-zinc-900/50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <span class="text-xs text-zinc-400">{t.agentDiagram.observe}</span>
+                <span class="font-mono text-[10px] text-zinc-300">{t.agentDiagram.clients}</span>
+              </div>
             </div>
           </div>
         </div>

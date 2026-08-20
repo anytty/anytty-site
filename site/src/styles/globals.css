@@ -46,6 +46,11 @@
   --color-zinc-800: var(--zinc-800);
   --color-zinc-900: var(--zinc-900);
   --color-zinc-950: var(--zinc-950);
+  --color-sky-300: var(--sky-300);
+  --color-sky-400: var(--sky-400);
+  --color-sky-500: var(--sky-500);
+  --color-emerald-300: var(--emerald-300);
+  --color-emerald-400: var(--emerald-400);
 }
 
 :root {
@@ -54,13 +59,18 @@
   --zinc-100: #27272a;
   --zinc-200: #3f3f46;
   --zinc-300: #52525b;
-  --zinc-400: #71717a;
-  --zinc-500: #a1a1aa;
-  --zinc-600: #b7b7bd;
+  --zinc-400: #575761;
+  --zinc-500: #62626c;
+  --zinc-600: #7a7a84;
   --zinc-700: #ceced3;
   --zinc-800: #dcdce0;
   --zinc-900: #e9e9ec;
   --zinc-950: #e2e2e6;
+  --sky-300: #075985;
+  --sky-400: #075985;
+  --sky-500: #0369a1;
+  --emerald-300: #047055;
+  --emerald-400: #047055;
   --line: rgba(9, 9, 11, 0.12);
   --line-strong: rgba(9, 9, 11, 0.18);
   --line-soft: rgba(9, 9, 11, 0.07);
@@ -101,6 +111,11 @@
   --zinc-800: #27272a;
   --zinc-900: #18181b;
   --zinc-950: #09090b;
+  --sky-300: #7dd3fc;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+  --emerald-300: #6ee7b7;
+  --emerald-400: #34d399;
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(255, 255, 255, 0.16);
   --line-soft: rgba(255, 255, 255, 0.05);
