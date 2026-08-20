@@ -70,6 +70,14 @@ const copy = {
       ['Connections belong to the workspace', 'Coding agents can work through existing authorized terminals instead of repeatedly scripting SSH, tunnels, and route selection.'],
       ['Permissions stay with each daemon', 'AnyTTY simplifies the path to a terminal without expanding the terminal or file access already granted by its daemon.'],
     ],
+    platformEyebrow: 'Native Windows · macOS · Linux', platformTitle: 'A terminal multiplexer that runs natively on Windows.',
+    platformLead: 'AnyTTY ships native CLI, TUI, and daemon builds for Windows x64 and ARM64. No WSL is required for the core workflow, and the same workspace model also runs on macOS and Linux.',
+    platformPoints: [
+      ['Windows, without the compatibility layer', 'Run persistent terminals, the TUI workspace, and the daemon directly on Windows.'],
+      ['The same model on every desktop', 'Move between Windows, macOS, and Linux without learning a different session workflow.'],
+    ],
+    platformProcess: 'Windows · native process',
+    platformGroups: [['Desktop', 'Windows · macOS · Linux'], ['Mobile clients', 'Android · iOS'], ['Windows builds', 'x64 · ARM64']],
     historyEyebrow: 'Disk-backed history', historyTitle: 'History grows with disk, not live memory.',
     historyLead: 'Terminal output is written to history files while every live client keeps only bounded screen data. There is no fixed line limit; practical capacity is determined by available disk space and retention settings.',
     historyStats: [['Live memory', 'Bounded'], ['History', 'Disk-limited'], ['Reconnect', 'Full context']],
@@ -94,6 +102,11 @@ const copy = {
       ['Direct and optional Cloud', 'Use a direct route on reachable networks, or let Cloud negotiate P2P and fall back to an encrypted Relay behind NAT.'],
       ['One authorized surface', 'Terminal input, screen output, and remote file operations use the same authenticated connection and daemon permissions.'],
     ],
+    cloudEyebrow: 'Optional paid service', cloudTitle: 'AnyTTY Cloud makes private endpoints easy to reach.',
+    cloudLead: 'Keep using the open-source core locally, over SSH, or with Direct connections for free. Add Cloud when you want managed device discovery, P2P negotiation, and encrypted Relay fallback.',
+    cloudFunding: 'Cloud subscriptions fund continued development and maintenance of the open-source AnyTTY core.',
+    cloudFeatures: [['Device discovery', 'Find your paired endpoints'], ['P2P first', 'Connect directly when possible'], ['Encrypted Relay', 'Fallback when NAT blocks the path']],
+    cloudCta: 'Open AnyTTY Cloud', cloudDocs: 'How Cloud works', cloudOptional: 'The open-source core remains independently usable',
     tabletAlts: ['Tablet split screen running Codex and OpenCode', 'TTT editor running inside an AnyTTY terminal on a tablet'],
     compareEyebrow: 'Beyond one terminal window', compareTitle: 'A multiplexer that extends across machines and screens.',
     compareLead: 'tmux and Zellij are excellent at persistent sessions inside a terminal. AnyTTY builds on that model with view-independent terminals, multi-endpoint workspaces, first-party external clients, and remote file workflows.',
@@ -150,6 +163,14 @@ const copy = {
       ['连接属于 workspace', 'Coding Agent 可以直接使用已有且经过授权的 terminal，不必反复编写 SSH、隧道和 route 选择逻辑。'],
       ['权限仍由 daemon 决定', 'AnyTTY 简化到达 terminal 的路径，但不会扩大目标 daemon 已经授予的 terminal 或文件权限。'],
     ],
+    platformEyebrow: '原生 Windows · macOS · Linux', platformTitle: '真正原生运行在 Windows 上的终端复用器。',
+    platformLead: 'AnyTTY 为 Windows x64 和 ARM64 提供原生 CLI、TUI 与 daemon，核心工作流不需要 WSL；同一套 workspace 模型也运行在 macOS 和 Linux 上。',
+    platformPoints: [
+      ['Windows，不经过兼容层', '持久终端、TUI workspace 和 daemon 都可以直接运行在 Windows 上。'],
+      ['每个桌面系统都是同一套逻辑', '在 Windows、macOS 与 Linux 之间切换，不需要重新学习另一套会话工作流。'],
+    ],
+    platformProcess: 'Windows · 原生进程',
+    platformGroups: [['桌面端', 'Windows · macOS · Linux'], ['移动客户端', 'Android · iOS'], ['Windows 架构', 'x64 · ARM64']],
     historyEyebrow: '磁盘历史记录', historyTitle: '历史容量看磁盘，不看实时内存。',
     historyLead: '终端输出持续写入历史文件，每个在线客户端只保留有界的画面数据。历史记录没有固定行数上限，实际容量由可用磁盘空间和保留设置决定。',
     historyStats: [['实时内存', '有界'], ['历史容量', '看磁盘'], ['重新连接', '完整上下文']],
@@ -174,6 +195,11 @@ const copy = {
       ['Direct 与可选 Cloud', '可达网络使用 Direct；内网环境可由 Cloud 协商 P2P，无法直连时使用加密 Relay。'],
       ['一个授权界面', '终端输入、画面输出和远程文件操作使用同一条认证连接，并遵守相同的 daemon 权限。'],
     ],
+    cloudEyebrow: '可选付费服务', cloudTitle: 'AnyTTY Cloud 让内网 endpoint 更容易抵达。',
+    cloudLead: '开源核心仍可免费通过 Local、SSH 或 Direct 独立使用。需要托管的设备发现、P2P 协商和加密 Relay 兜底时，再按需使用 Cloud。',
+    cloudFunding: 'Cloud 订阅收入会用于 AnyTTY 开源核心的持续开发与维护。',
+    cloudFeatures: [['设备发现', '找到已经配对的 endpoint'], ['P2P 优先', '条件允许时直接连接'], ['加密 Relay', 'NAT 阻断直连时自动兜底']],
+    cloudCta: '进入 AnyTTY Cloud', cloudDocs: '了解 Cloud 原理', cloudOptional: '开源核心始终可以独立使用',
     tabletAlts: ['平板上下分屏运行 Codex 与 OpenCode', '在平板 AnyTTY 终端内运行 TTT 编辑器'],
     compareEyebrow: '走出当前终端窗口', compareTitle: '一个跨越机器与屏幕的终端复用器。',
     compareLead: 'tmux 和 Zellij 很擅长在终端内维护持久会话。AnyTTY 在这一模型上进一步提供与视图解耦的 terminal、跨 endpoint workspace、官方外部客户端和远程文件工作流。',
@@ -198,6 +224,7 @@ const copy = {
 
 const t = copy[locale]
 const docsPath = sitePath(localizedPath(locale, '/docs/quick-start'))
+const cloudDocsPath = sitePath(localizedPath(locale, '/docs/cloud'))
 const releaseUrl = 'https://github.com/anytty/anytty-site/releases/tag/v0.0.1-beta.0'
 const viewIcons = [PanelsTopLeft, TerminalSquare, Laptop, Smartphone]
 const observerIcons = [Eye, ShieldCheck]
@@ -370,6 +397,50 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     </div>
   </section>
 
+  <section id="platforms" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="platform-title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+        <div class="max-w-3xl">
+          <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.platformEyebrow}</Badge>
+          <h2 id="platform-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.platformTitle}</h2>
+          <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.platformLead}</p>
+        </div>
+
+        <div class="mt-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12">
+          <figure class="group relative overflow-hidden rounded-2xl bg-zinc-950 ring-1 ring-[var(--line)]">
+            <img class="block aspect-[1800/955] w-full cursor-zoom-in object-cover" src={sitePath('/assets/product/win-tui.webp')} alt={t.windowsAlt} width="1800" height="955" loading="lazy" data-image-preview />
+            <figcaption class="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-zinc-950/90 px-3 py-2 font-mono text-[10px] text-zinc-300 ring-1 ring-[var(--line-strong)] backdrop-blur-md">
+              <span class="size-1.5 rounded-full bg-sky-400" />{t.platformProcess}
+            </figcaption>
+          </figure>
+
+          <div class="grid gap-4">
+            {t.platformPoints.map(([title, body], index) => (
+              <div class="flex items-start gap-4 border-b border-[var(--line)] pb-5 last:border-0 last:pb-0">
+                <span class={cn('grid size-10 shrink-0 place-items-center rounded-lg', index === 0 ? 'bg-sky-400/10 text-sky-300' : 'bg-emerald-400/10 text-emerald-300')}>
+                  {index === 0 ? <TerminalSquare className="size-5" aria-hidden="true" /> : <MonitorSmartphone className="size-5" aria-hidden="true" />}
+                </span>
+                <div>
+                  <h3 class="text-sm font-medium text-zinc-100">{title}</h3>
+                  <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <dl class="mt-10 grid border-y border-[var(--line)] sm:grid-cols-3">
+          {t.platformGroups.map(([term, detail]) => (
+            <div class="min-w-0 py-5 [&+&]:border-t [&+&]:border-[var(--line)] sm:px-6 sm:first:pl-0 sm:last:pr-0 sm:[&+&]:border-l sm:[&+&]:border-t-0">
+              <dt class="font-mono text-[10px] uppercase text-zinc-500">{term}</dt>
+              <dd class="mt-2 text-sm font-medium text-zinc-200">{detail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <section class="py-20 sm:py-24 lg:py-28" aria-labelledby="history-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
@@ -506,6 +577,50 @@ const accessIcons = [Cloud, LockKeyhole, Files]
               </div>
             )
           })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cloud" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-title">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="overflow-hidden rounded-3xl bg-zinc-900/60 ring-1 ring-[var(--line)]">
+        <div class="grid lg:grid-cols-[0.95fr_1.05fr]">
+          <div class="p-6 sm:p-10 lg:p-14">
+            <Badge variant="secondary" className="border-0 bg-sky-400/10 font-mono text-[11px] font-normal text-sky-300">{t.cloudEyebrow}</Badge>
+            <h2 id="cloud-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.cloudTitle}</h2>
+            <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.cloudLead}</p>
+
+            <div class="mt-7 flex items-start gap-3 border-l-2 border-sky-400/60 pl-4 text-sm leading-6 text-zinc-300">
+              <Cloud className="mt-0.5 size-5 shrink-0 text-sky-300" aria-hidden="true" />
+              <p>{t.cloudFunding}</p>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a class={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'h-11 gap-2 bg-sky-500 px-5 font-normal hover:bg-sky-400')} href="https://cloud.anytty.com">
+                <Cloud className="size-4" aria-hidden="true" />{t.cloudCta}<ArrowRight aria-hidden="true" />
+              </a>
+              <a class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'h-11 border-[var(--line-strong)] bg-[var(--chip-soft)] px-5 font-normal text-zinc-100 hover:bg-[var(--chip)] hover:text-zinc-100')} href={cloudDocsPath}>{t.cloudDocs}</a>
+            </div>
+          </div>
+
+          <div class="border-t border-[var(--line)] bg-zinc-950 p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-14">
+            <div class="flex items-center justify-between gap-4 font-mono text-[10px] text-zinc-500 sm:text-[11px]">
+              <span>AnyTTY Cloud</span>
+              <span class="flex items-center gap-1.5 text-emerald-300"><ShieldCheck className="size-3.5" aria-hidden="true" />{t.cloudOptional}</span>
+            </div>
+            <div class="relative mt-8 space-y-3 before:absolute before:bottom-8 before:left-5 before:top-8 before:w-px before:bg-sky-400/35">
+              {t.cloudFeatures.map(([title, body], index) => (
+                <div class="relative flex items-center gap-4 rounded-xl bg-zinc-900 p-4 ring-1 ring-[var(--line)]">
+                  <span class={cn('z-10 grid size-10 shrink-0 place-items-center rounded-lg font-mono text-[11px] ring-1', index === 0 ? 'bg-sky-400/10 text-sky-300 ring-sky-400/20' : index === 1 ? 'bg-emerald-400/10 text-emerald-300 ring-emerald-400/20' : 'bg-amber-400/10 text-amber-300 ring-amber-400/20')}>0{index + 1}</span>
+                  <div>
+                    <h3 class="text-sm font-medium text-zinc-100">{title}</h3>
+                    <p class="mt-1 text-xs leading-5 text-zinc-500">{body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
