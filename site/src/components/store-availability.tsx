@@ -1,7 +1,7 @@
 "use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { Apple, ArrowDownToLine, Clock3, Play, X } from "lucide-react";
+import { ArrowDownToLine, Clock3, X } from "lucide-react";
 import * as React from "react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -20,6 +20,7 @@ interface StoreAvailabilityProps {
   androidDownload: string;
   closeLabel: string;
   releaseUrl: string;
+  appIconUrl: string;
 }
 
 type Store = "ios" | "android";
@@ -37,10 +38,10 @@ export function StoreAvailability({
   androidDownload,
   closeLabel,
   releaseUrl,
+  appIconUrl,
 }: StoreAvailabilityProps) {
   const [store, setStore] = React.useState<Store | null>(null);
   const isAndroid = store === "android";
-  const StoreIcon = isAndroid ? Play : Apple;
 
   return (
     <div>
@@ -51,7 +52,7 @@ export function StoreAvailability({
           className="flex h-14 items-center gap-3 rounded-lg bg-zinc-950 px-4 text-left text-zinc-100 ring-1 ring-[var(--line-strong)] transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={() => setStore("ios")}
         >
-          <Apple className="size-6 shrink-0" aria-hidden="true" />
+          <img className="size-7 shrink-0 rounded-md" src={appIconUrl} alt="" width="28" height="28" />
           <span className="min-w-0">
             <span className="block font-mono text-[9px] uppercase text-zinc-500">{comingSoon}</span>
             <span className="block truncate text-sm font-medium">{appStoreLabel}</span>
@@ -62,7 +63,7 @@ export function StoreAvailability({
           className="flex h-14 items-center gap-3 rounded-lg bg-zinc-950 px-4 text-left text-zinc-100 ring-1 ring-[var(--line-strong)] transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={() => setStore("android")}
         >
-          <Play className="size-6 shrink-0 fill-current" aria-hidden="true" />
+          <img className="size-7 shrink-0 rounded-md" src={appIconUrl} alt="" width="28" height="28" />
           <span className="min-w-0">
             <span className="block font-mono text-[9px] uppercase text-zinc-500">{comingSoon}</span>
             <span className="block truncate text-sm font-medium">{googlePlayLabel}</span>
@@ -77,9 +78,7 @@ export function StoreAvailability({
             <Dialog.Close className="absolute right-4 top-4 grid size-8 place-items-center rounded-full text-zinc-500 transition-colors hover:bg-[var(--chip)] hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" aria-label={closeLabel}>
               <X className="size-4" aria-hidden="true" />
             </Dialog.Close>
-            <div className="grid size-11 place-items-center rounded-lg bg-sky-400/10 text-sky-300">
-              <StoreIcon className={cn("size-6", isAndroid && "fill-current")} aria-hidden="true" />
-            </div>
+            <img className="size-11 rounded-lg ring-1 ring-[var(--line-strong)]" src={appIconUrl} alt="" width="44" height="44" />
             <Dialog.Title className="mt-5 pr-8 text-xl font-medium">
               {isAndroid ? androidTitle : iosTitle}
             </Dialog.Title>

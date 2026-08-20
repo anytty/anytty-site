@@ -4,18 +4,11 @@ import {
   ArrowRight,
   Check,
   CheckCircle2,
-  Clock3,
   Cloud,
   Database,
-  Eye,
-  FileStack,
-  Files,
   HardDrive,
-  History,
   Laptop,
-  LockKeyhole,
   Minus,
-  MonitorSmartphone,
   PanelsTopLeft,
   Radio,
   Server,
@@ -37,8 +30,7 @@ const { locale } = Astro.props
 const copy = {
   en: {
     eyebrow: 'Open source · cross-platform · multi-endpoint terminal multiplexer',
-    promise: 'One workspace for every terminal, on every machine.',
-    lead: 'AnyTTY keeps persistent terminal sessions on your machines. Shells, builds, servers, and coding agents survive closed windows, while the TUI, CLI, web, and mobile apps attach to the same sessions.',
+    lead: 'Terminals and tasks keep running on their original machines. Switch computers or move to web or mobile, and continue the same terminal session.',
     quickStart: 'See how it works', release: 'Download beta',
     installLabel: 'macOS / Linux', windowsInstallLabel: 'Windows', installPlatformLabel: 'Choose an installer',
     installCommand: 'curl -fsSL https://raw.githubusercontent.com/anytty/anytty-site/main/install.sh | sh',
@@ -47,8 +39,8 @@ const copy = {
     previewLabel: 'A real AnyTTY workspace', previewMeta: 'local + remote · 5 terminals · one workspace',
     previewAlt: 'AnyTTY TUI showing local and remote terminals in split and floating panels',
     tuiLabel: 'TUI interface', tabletLabel: 'Tablet view', mobileLabel: 'Mobile view',
-    observerEyebrow: 'A TTY', observerTitle: 'A TTY is the unit of work.',
-    observerLead: 'tmux and Zellij usually organize sessions through windows and panes. AnyTTY treats each TTY as an independent, persistent runtime object. A panel is only a view that can point at any TTY without moving or restarting it.',
+    observerEyebrow: 'A TTY', observerTitle: 'The TTY comes first. A panel is just where you look at it.',
+    observerLead: 'With tmux and Zellij, you usually find a terminal through its session, window, and pane. AnyTTY keeps the TTY separate from that layout. Put it in a split, move to a float, or show another TTY in the same panel — the job inside does not move.',
     runtime: 'Terminal runtime', runtimeState: 'Keeps running on your machine', snapshots: 'Screen snapshots',
     views: ['TUI panel', 'CLI', 'Web', 'Mobile'],
     panelDiagram: {
@@ -56,60 +48,60 @@ const copy = {
       runtime: 'Daemon TTY runtime', terminals: [['tty-01', 'build'], ['tty-02', 'agent'], ['tty-03', 'logs']], persistent: 'TTYs keep running',
     },
     observerPoints: [
-      ['TTYs exist outside the layout', 'Unlike a pane-bound workflow, each TTY keeps its identity and process lifecycle independently of the current TUI arrangement.'],
-      ['Switch TTYs, keep the layout', 'Splits, floating panels, and workspace geometry stay in place while each panel points to a different TTY.'],
+      ['Close the view, keep the job', 'Quit the TUI or disconnect a client. The TTY and the process inside it keep running on the daemon.'],
+      ['Change the TTY, not the layout', 'Keep your splits and floating panels where they are. Any panel can show another TTY whenever you need it.'],
     ],
-    workbenchEyebrow: 'Multi-endpoint workspace', workbenchTitle: 'Windows, macOS, and Linux in one TUI workspace.',
-    workbenchLead: 'Unlike terminal multiplexers centered on one host, one AnyTTY TUI workspace can operate TTYs from multiple endpoints at the same time. Three panels can control Windows, macOS, and Linux side by side.',
+    workbenchEyebrow: 'Multi-endpoint workspace', workbenchTitle: 'Three panels. Three operating systems. One TUI.',
+    workbenchLead: 'Open a Windows shell, a macOS coding agent, and a Linux build in the same workspace. Each panel can belong to a different endpoint, and you can operate all three without leaving the TUI.',
     windowsAlt: 'AnyTTY TUI running on Windows with multiple terminals',
     endpointDiagram: {
       workspace: 'One TUI workspace', local: 'Windows endpoint', workstation: 'macOS endpoint', server: 'Linux endpoint',
       panels: ['Windows', 'macOS', 'Linux'], routes: ['Local', 'Direct / Cloud', 'SSH'],
     },
     workbenchPoints: [
-      ['Operate three systems side by side', 'Use separate panels for a Windows shell, a macOS agent, and a Linux build without leaving the workspace.'],
-      ['Connections belong to the workspace', 'Coding agents can work through existing authorized terminals instead of repeatedly scripting SSH, tunnels, and route selection.'],
-      ['Permissions stay with each daemon', 'AnyTTY simplifies the path to a terminal without expanding the terminal or file access already granted by its daemon.'],
+      ['Keep all three in front of you', 'A local shell, a remote agent, and a build log can stay open side by side.'],
+      ['Let agents use the connection you already made', 'They can work in an authorized TTY instead of setting up SSH, tunnels, and routes again.'],
+      ['Each machine keeps its own permissions', 'AnyTTY gets you to the TTY. The daemon on that machine still decides what the TTY and file browser can access.'],
     ],
-    platformEyebrow: 'Native Windows · macOS · Linux', platformTitle: 'A terminal multiplexer that runs natively on Windows.',
-    platformLead: 'AnyTTY ships native CLI, TUI, and daemon builds for Windows x64 and ARM64. No WSL is required for the core workflow, and the same workspace model also runs on macOS and Linux.',
+    platformEyebrow: 'Native Windows · macOS · Linux', platformTitle: 'Windows deserves a good terminal multiplexer too.',
+    platformLead: 'The CLI, TUI, and daemon run natively on Windows x64 and ARM64. You do not need WSL to get started. The same workflow also runs on macOS and Linux.',
     platformPoints: [
-      ['Windows, without the compatibility layer', 'Run persistent terminals, the TUI workspace, and the daemon directly on Windows.'],
-      ['The same model on every desktop', 'Move between Windows, macOS, and Linux without learning a different session workflow.'],
+      ['Install it and run', 'Persistent TTYs, the TUI, and the daemon all run directly on Windows.'],
+      ['Switch systems without switching habits', 'The workspace works the same way on Windows, macOS, and Linux.'],
     ],
     platformProcess: 'Windows · native process',
     platformGroups: [['Desktop', 'Windows · macOS · Linux'], ['Mobile clients', 'Android · iOS'], ['Windows builds', 'x64 · ARM64']],
-    historyEyebrow: 'Disk-backed history', historyTitle: 'Long history without unbounded live memory.',
-    historyLead: 'AnyTTY keeps the live screen bounded while retaining older terminal output in disk-backed history. There is no fixed line limit; practical capacity is determined by available disk space and retention settings.',
+    historyEyebrow: 'Disk-backed history', historyTitle: 'Leave it overnight. Even after a reboot, the history is still there.',
+    historyLead: 'The current screen uses bounded memory, while older output is kept in file-backed history. Reboot the machine and you can still scroll back to see what happened before. There is no fixed line limit; you decide how much to keep through disk capacity and retention settings.',
     historyStats: [['Live memory', 'Bounded'], ['History', 'Disk-limited'], ['Reconnect', 'Full context']],
-    historyNote: 'Useful after a disconnect, an accidental exit, or an unattended agent run that produced hours of output.',
+    historyNote: 'Handy after a disconnect, a closed window, a machine restart, or an agent run that finished while you were away.',
     historyDiagram: {
       stream: 'terminal history', live: 'current screen context', disk: 'retained history', bounded: 'bounded memory', growing: 'capacity and retention controlled',
       events: [['09:14', 'build started'], ['11:42', 'tests passed'], ['16:08', 'agent completed']],
     },
-    mobileEyebrow: 'TUI · CLI · Web · Mobile', mobileTitle: 'Every client is a view into the same terminal runtime.',
-    mobileLead: 'Use the keyboard-first TUI at your desk, automate through the CLI, or check in from web, phone, and tablet. Each client reads at its own pace without slowing the process inside the terminal.',
+    mobileEyebrow: 'TUI · CLI · Web · Mobile', mobileTitle: 'Move from your computer to your phone without leaving the work behind.',
+    mobileLead: 'Start in the desktop TUI, then open the same TTY from web, phone, or tablet and continue where you left off. The process stays on the endpoint, so switching clients does not interrupt the work.',
     mobilePoints: [
       ['Terminal activity at a glance', 'Scan running sessions and time since last output.'],
       ['Touch-ready controls', 'Use Esc, Ctrl, arrows, paging, and common terminal actions.'],
       ['Files and previews', 'Browse, upload, download, and preview remote files.'],
     ],
     mobileAlts: ['AnyTTY mobile terminal list with recent activity', 'AnyTTY mobile terminal with an extra-key row', 'AnyTTY mobile remote file manager'],
-    accessEyebrow: 'Connection routes', accessTitle: 'Choose how each endpoint connects.',
-    accessLead: 'Start locally, use SSH where it already fits, connect directly on networks you manage, or add optional AnyTTY Cloud for device discovery, P2P negotiation, and encrypted Relay fallback.',
+    accessEyebrow: 'Connection routes', accessTitle: 'Local, SSH, Direct, or Cloud. Pick per machine.',
+    accessLead: 'Use Local on the same machine. Keep SSH where it already works. Use Direct on networks you control, and Cloud when an endpoint is hard to reach from outside.',
     accessDiagram: { endpoint: 'Workspace client', routes: ['Local', 'SSH', 'Direct', 'Cloud'], daemon: 'Endpoint daemon' },
     accessPoints: [
-      ['Local and SSH', 'Work on the same machine or reuse the OpenSSH access you already trust. No Cloud service is required.'],
-      ['Direct and optional Cloud', 'Use a direct route on reachable networks, or let Cloud negotiate P2P and fall back to an encrypted Relay behind NAT.'],
-      ['One authorized surface', 'Terminal input, screen output, and remote file operations use the same authenticated connection and daemon permissions.'],
+      ['Local and SSH', 'Stay local when you can. If a machine already has SSH, keep using the access you trust.'],
+      ['Direct and Cloud', 'Connect directly on reachable networks. Behind NAT, Cloud tries P2P first and uses an encrypted Relay when needed.'],
+      ['Terminal and files together', 'The same authenticated connection handles terminal control and remote files, under the same daemon permissions.'],
     ],
-    cloudEyebrow: 'AnyTTY Cloud', cloudTitle: 'AnyTTY Cloud makes private endpoints easy to reach.',
-    cloudLead: 'Use AnyTTY Cloud when you want managed device discovery, P2P negotiation, and encrypted Relay fallback for endpoints that are difficult to reach directly.',
+    cloudEyebrow: 'AnyTTY Cloud', cloudTitle: 'Reach machines tucked away behind NAT.',
+    cloudLead: 'Cloud finds your paired endpoints and tries a direct P2P path. If the network gets in the way, it falls back to an encrypted Relay.',
     cloudFeatures: [['Device discovery', 'Find your paired endpoints'], ['P2P first', 'Connect directly when possible'], ['Encrypted Relay', 'Fallback when NAT blocks the path']],
     cloudCta: 'Open AnyTTY Cloud', cloudDocs: 'How Cloud works', cloudOptional: 'Terminal and file permissions stay with the endpoint daemon',
     tabletAlts: ['Tablet split screen running Codex and OpenCode', 'TTT editor running inside an AnyTTY terminal on a tablet'],
-    compareEyebrow: 'Beyond one terminal window', compareTitle: 'A multiplexer that extends across machines and screens.',
-    compareLead: 'tmux and Zellij are excellent at persistent sessions inside a terminal. AnyTTY builds on that model with view-independent terminals, multi-endpoint workspaces, first-party external clients, and remote file workflows.',
+    compareEyebrow: 'Compared with tmux and Zellij', compareTitle: 'More than panes on one machine.',
+    compareLead: 'tmux and Zellij are great at keeping sessions alive on one host. AnyTTY adds TTYs that are separate from the layout, a workspace that spans endpoints, and web, mobile, and file access built in.',
     compareProducts: ['AnyTTY', 'tmux', 'Zellij', 'Windows Terminal'],
     compareRows: [
       ['Persistent sessions · detach and reattach', true, true, true, false],
@@ -121,8 +113,8 @@ const copy = {
       ['Native Windows support (no WSL)', true, false, false, true],
       ['Optional managed NAT traversal', true, false, false, false],
     ],
-    installEyebrow: 'Beta 0.0.1', installTitle: 'Run it on the machine you already use.',
-    installLead: 'Desktop binaries are available for macOS, Linux, and Windows. The Android Beta APK is available from GitHub Releases, while the iOS and Google Play builds are under store review.',
+    installEyebrow: 'Beta 0.0.1', installTitle: 'Install it. Start with one TTY.',
+    installLead: 'Grab the desktop build for macOS, Linux, or Windows. The Android Beta APK is on GitHub Releases; the App Store and Google Play versions are still in review.',
     docs: 'Read the documentation', releases: 'Open GitHub Releases',
     platforms: ['macOS', 'Linux', 'Windows', 'Android', 'iOS'],
     openSource: 'Apache-2.0 · source, clients, and release artifacts on GitHub',
@@ -135,8 +127,7 @@ const copy = {
   },
   'zh-CN': {
     eyebrow: '开源 · 跨平台 · Multi-endpoint 终端复用器',
-    promise: '一个工作台，管理每台机器上的终端。',
-    lead: 'AnyTTY 在你的机器上维护持久终端。Shell、构建任务、服务和 AI Agent 不会因为窗口关闭而停止；TUI、CLI、Web 和手机 App 都能接入同一个终端现场。',
+    lead: '终端和任务留在原机器上继续运行。换台电脑，或者改用浏览器、手机，都能接着工作。',
     quickStart: '看看工作原理', release: '下载 Beta',
     installLabel: 'macOS / Linux', windowsInstallLabel: 'Windows', installPlatformLabel: '选择安装平台',
     installCommand: 'curl -fsSL https://raw.githubusercontent.com/anytty/anytty-site/main/install.sh | sh',
@@ -145,8 +136,8 @@ const copy = {
     previewLabel: '真实的 AnyTTY 工作台', previewMeta: '本地 + 远程 · 5 个终端 · 一个工作区',
     previewAlt: 'AnyTTY TUI 通过分屏和浮动 Panel 同时展示本地与远程终端',
     tuiLabel: 'TUI 界面', tabletLabel: '平板上的展示', mobileLabel: '手机上的展示',
-    observerEyebrow: 'A TTY', observerTitle: '工作的基本单位是一条 TTY。',
-    observerLead: 'tmux 和 Zellij 通常通过 session、window 与 pane 来组织终端。AnyTTY 把每条 TTY 作为独立、持久运行的对象；panel 只是视图，可以随时指向任意 TTY，而不需要移动或重启它。',
+    observerEyebrow: 'A TTY', observerTitle: '先有 TTY，再决定放在哪个 panel 里。',
+    observerLead: '用 tmux 或 Zellij 时，我们通常顺着 session、window、pane 去找终端。AnyTTY 把这两件事拆开：TTY 自己跑，panel 只负责显示。放进分屏、切到浮窗，或者让这个 panel 看另一条 TTY，里面的任务都不用动。',
     runtime: '终端本体', runtimeState: '一直跑在你的机器上', snapshots: '画面快照',
     views: ['TUI panel', 'CLI', 'Web', '手机 App'],
     panelDiagram: {
@@ -154,60 +145,60 @@ const copy = {
       runtime: 'Daemon TTY runtime', terminals: [['tty-01', '构建'], ['tty-02', 'Agent'], ['tty-03', '日志']], persistent: 'TTY 始终在运行',
     },
     observerPoints: [
-      ['TTY 独立于 layout 存在', '有别于 pane 绑定的工作方式，每条 TTY 的 identity 和进程生命周期都不依赖当前 TUI 布局。'],
-      ['换 TTY，不动 layout', '分屏、浮动 panel 和 workspace 的几何布局保持不变，每个 panel 可以随时指向另一条 TTY。'],
+      ['关掉视图，任务照常跑', '退出 TUI 或断开客户端，不会带走 TTY。里面的进程还留在 daemon 上。'],
+      ['换一条 TTY，布局不用重排', '分屏和浮动 panel 都留在原位。需要时，让任意 panel 显示另一条 TTY 就行。'],
     ],
-    workbenchEyebrow: '跨 endpoint 工作台', workbenchTitle: '同一个 TUI workspace，同时操作 Windows、macOS 和 Linux。',
-    workbenchLead: '有别于围绕单台主机组织的终端复用器，一个 AnyTTY TUI workspace 可以同时操作来自多个 endpoint 的 TTY。三个 panel 可以分别控制 Windows、macOS 与 Linux。',
+    workbenchEyebrow: '跨 endpoint 工作台', workbenchTitle: '一个 TUI，同时看住 Windows、macOS 和 Linux。',
+    workbenchLead: '三个 panel 可以连到三台不同的机器：左边跑 Windows Shell，中间放 macOS 上的 Agent，右边盯着 Linux 构建。都在同一个 workspace 里，也都能直接操作。',
     windowsAlt: 'AnyTTY TUI 在 Windows 上管理多个终端',
     endpointDiagram: {
       workspace: '一个 TUI workspace', local: 'Windows endpoint', workstation: 'macOS endpoint', server: 'Linux endpoint',
       panels: ['Windows', 'macOS', 'Linux'], routes: ['Local', 'Direct / Cloud', 'SSH'],
     },
     workbenchPoints: [
-      ['三个系统，并排操作', 'Windows Shell、macOS Agent 和 Linux 构建可以分别放在三个 panel 中同时操作。'],
-      ['连接属于 workspace', 'Coding Agent 可以直接使用已有且经过授权的 terminal，不必反复编写 SSH、隧道和 route 选择逻辑。'],
-      ['权限仍由 daemon 决定', 'AnyTTY 简化到达 terminal 的路径，但不会扩大目标 daemon 已经授予的 terminal 或文件权限。'],
+      ['三台机器，都放在眼前', '本地 Shell、远程 Agent 和构建日志可以一直并排放着，不用来回切窗口。'],
+      ['Agent 不用再折腾连接', '连接已经在 workspace 里准备好了。Agent 直接使用授权过的 TTY，不必重复配置 SSH、隧道和路由。'],
+      ['权限还是各台机器说了算', 'AnyTTY 负责把你带到 TTY；能看哪些文件、能做什么，仍由那台机器上的 daemon 决定。'],
     ],
-    platformEyebrow: '原生 Windows · macOS · Linux', platformTitle: '真正原生运行在 Windows 上的终端复用器。',
-    platformLead: 'AnyTTY 为 Windows x64 和 ARM64 提供原生 CLI、TUI 与 daemon，核心工作流不需要 WSL；同一套 workspace 模型也运行在 macOS 和 Linux 上。',
+    platformEyebrow: '原生 Windows · macOS · Linux', platformTitle: 'Windows 上，也该有一个顺手的终端复用器。',
+    platformLead: 'CLI、TUI 和 daemon 都有 Windows x64 / ARM64 原生版本，装上就能跑，不用先准备 WSL。同一套用法也支持 macOS 和 Linux。',
     platformPoints: [
-      ['Windows，不经过兼容层', '持久终端、TUI workspace 和 daemon 都可以直接运行在 Windows 上。'],
-      ['每个桌面系统都是同一套逻辑', '在 Windows、macOS 与 Linux 之间切换，不需要重新学习另一套会话工作流。'],
+      ['装上就能跑', '持久 TTY、TUI 和 daemon 都直接运行在 Windows 上。'],
+      ['换系统，不用换一套习惯', 'Windows、macOS 和 Linux 使用同一套 workspace 和终端操作。'],
     ],
     platformProcess: 'Windows · 原生进程',
     platformGroups: [['桌面端', 'Windows · macOS · Linux'], ['移动客户端', 'Android · iOS'], ['Windows 架构', 'x64 · ARM64']],
-    historyEyebrow: '磁盘历史记录', historyTitle: '保留长历史，不让实时内存无限增长。',
-    historyLead: 'AnyTTY 让实时画面数据保持有界，同时通过磁盘历史保留更早的终端输出。历史记录没有固定行数上限，实际容量由可用磁盘空间和保留设置决定。',
+    historyEyebrow: '磁盘历史记录', historyTitle: '跑一晚上，甚至重启过电脑，回来还能往前翻。',
+    historyLead: '当前画面只占有限内存，更早的输出保存在文件历史里。即使电脑重启过，也能继续往前翻，看见之前发生了什么。没有固定行数上限，能留多少由磁盘空间和保留设置决定。',
     historyStats: [['实时内存', '有界'], ['历史容量', '看磁盘'], ['重新连接', '完整上下文']],
-    historyNote: '断线、误关窗口，或者 Agent 跑了好几个小时，重新连上后还能看到完整现场。',
+    historyNote: '断过网、关错窗口、重启过电脑，或者 Agent 趁你不在跑完了，都可以回来看看之前发生了什么。',
     historyDiagram: {
       stream: '终端历史', live: '当前画面上下文', disk: '已保留的历史', bounded: '内存有界', growing: '容量与保留策略可控',
       events: [['09:14', '开始构建'], ['11:42', '测试通过'], ['16:08', 'Agent 完成']],
     },
-    mobileEyebrow: 'TUI · CLI · Web · 手机 App', mobileTitle: '所有客户端，看到的是同一套终端运行时。',
-    mobileLead: '在桌面使用键盘优先的 TUI，通过 CLI 自动化，或者从 Web、手机和平板查看状态。每个客户端按自己的速度读取画面，不会拖慢 terminal 中的进程。',
+    mobileEyebrow: 'TUI · CLI · Web · 手机 App', mobileTitle: '电脑上的工作，拿起手机就能接着做。',
+    mobileLead: '先在电脑的 TUI 里开始，离开电脑后，用 Web、手机或平板打开同一条 TTY，直接从刚才的位置继续。任务始终跑在 endpoint 上，换设备不会打断它。',
     mobilePoints: [
       ['终端状态一眼看清', '查看运行中的终端和距离上次输出的时间。'],
       ['触控操作顺手', 'Esc、Ctrl、方向键、翻页和常用终端操作都做了触控适配。'],
       ['文件也能管', '浏览、上传、下载和预览远程文件。'],
     ],
     mobileAlts: ['AnyTTY 手机 App 展示终端列表与近期活动', 'AnyTTY 手机 App 使用扩展按键操作终端', 'AnyTTY 手机 App 的远程文件管理器'],
-    accessEyebrow: '连接方式', accessTitle: '为每个 endpoint 选择合适的连接方式。',
-    accessLead: '先从本地使用开始；已有 SSH 就继续使用 SSH；可达网络可以 Direct 直连；位于 NAT 或内网时，再按需使用 AnyTTY Cloud 的设备发现、P2P 协商和加密 Relay 兜底。',
+    accessEyebrow: '连接方式', accessTitle: '本机、SSH、直连、Cloud，按机器选。',
+    accessLead: '同一台机器就走 Local；已经有 SSH，就继续用 SSH；网络可达时用 Direct；藏在内网、不好连接的机器，再交给 AnyTTY Cloud。',
     accessDiagram: { endpoint: 'Workspace 客户端', routes: ['Local', 'SSH', 'Direct', 'Cloud'], daemon: 'Endpoint daemon' },
     accessPoints: [
-      ['Local 与 SSH', '在同一台机器上直接工作，或继续使用已经信任的 OpenSSH 连接，完全不需要 Cloud 服务。'],
-      ['Direct 与可选 Cloud', '可达网络使用 Direct；内网环境可由 Cloud 协商 P2P，无法直连时使用加密 Relay。'],
-      ['一个授权界面', '终端输入、画面输出和远程文件操作使用同一条认证连接，并遵守相同的 daemon 权限。'],
+      ['Local 与 SSH', '能在本机解决就留在本机。已有 SSH 的机器，继续用你熟悉、信任的连接。'],
+      ['Direct 与 Cloud', '网络能直接到达就用 Direct。隔着 NAT 时，Cloud 先尝试 P2P，不行再走加密 Relay。'],
+      ['终端和文件走在一起', '控制终端、查看画面、管理远程文件都走同一条认证连接，也遵守同一套 daemon 权限。'],
     ],
-    cloudEyebrow: 'AnyTTY Cloud', cloudTitle: 'AnyTTY Cloud 让内网 endpoint 更容易抵达。',
-    cloudLead: '当 endpoint 难以直接访问时，AnyTTY Cloud 提供托管的设备发现、P2P 协商和加密 Relay 兜底。',
+    cloudEyebrow: 'AnyTTY Cloud', cloudTitle: '机器藏在内网，也能连回去。',
+    cloudLead: 'Cloud 先找到你配对过的机器，再尝试建立 P2P 直连。网络实在不允许时，就自动切到加密 Relay。',
     cloudFeatures: [['设备发现', '找到已经配对的 endpoint'], ['P2P 优先', '条件允许时直接连接'], ['加密 Relay', 'NAT 阻断直连时自动兜底']],
     cloudCta: '进入 AnyTTY Cloud', cloudDocs: '了解 Cloud 原理', cloudOptional: '终端与文件权限仍由 endpoint daemon 决定',
     tabletAlts: ['平板上下分屏运行 Codex 与 OpenCode', '在平板 AnyTTY 终端内运行 TTT 编辑器'],
-    compareEyebrow: '走出当前终端窗口', compareTitle: '一个跨越机器与屏幕的终端复用器。',
-    compareLead: 'tmux 和 Zellij 很擅长在终端内维护持久会话。AnyTTY 在这一模型上进一步提供与视图解耦的 terminal、跨 endpoint workspace、官方外部客户端和远程文件工作流。',
+    compareEyebrow: '和 tmux / Zellij 有什么不同', compareTitle: '不只是在一台机器里切 pane。',
+    compareLead: 'tmux 和 Zellij 很适合在一台主机上维护会话。AnyTTY 多做了几件事：TTY 不绑死 layout，一个 workspace 能放多台机器，还有 Web、手机和远程文件管理。',
     compareProducts: ['AnyTTY', 'tmux', 'Zellij', 'Windows Terminal'],
     compareRows: [
       ['持久会话 · detach 与 reattach', true, true, true, false],
@@ -219,8 +210,8 @@ const copy = {
       ['Windows 原生支持（无需 WSL）', true, false, false, true],
       ['可选托管 NAT 穿透', true, false, false, false],
     ],
-    installEyebrow: 'Beta 0.0.1', installTitle: '直接装在你现在用的机器上。',
-    installLead: '目前提供 macOS、Linux 与 Windows 安装包；Android Beta APK 可从 GitHub Releases 下载，iOS 与 Google Play 版本正在商店审核。',
+    installEyebrow: 'Beta 0.0.1', installTitle: '先装起来，跑一条 TTY 试试。',
+    installLead: 'macOS、Linux 和 Windows 都有安装包。Android Beta APK 放在 GitHub Releases；App Store 和 Google Play 版本还在审核。',
     docs: '阅读文档', releases: '查看 GitHub Releases',
     platforms: ['macOS', 'Linux', 'Windows', 'Android', 'iOS'],
     openSource: 'Apache-2.0 · 源码、客户端和构建产物都在 GitHub',
@@ -238,28 +229,31 @@ const docsPath = sitePath(localizedPath(locale, '/docs/quick-start'))
 const cloudDocsPath = sitePath(localizedPath(locale, '/docs/cloud'))
 const releaseUrl = 'https://github.com/anytty/anytty-site/releases/tag/v0.0.1-beta.0'
 const viewIcons = [PanelsTopLeft, TerminalSquare, Laptop, Smartphone]
-const observerIcons = [Eye, ShieldCheck]
-const workbenchIcons = [MonitorSmartphone, Laptop, Clock3]
-const mobileIcons = [Clock3, TerminalSquare, FileStack]
-const accessIcons = [Cloud, LockKeyhole, Files]
 ---
 
 <main id="main" class="bg-background text-zinc-50">
   <div class="hero-cinematic -mt-20 pt-20">
-    <section class="relative overflow-hidden px-5 pb-20 pt-24 text-center sm:px-8 sm:pt-32" aria-labelledby="product-title" data-hero>
+    <section class="relative overflow-hidden px-5 pb-16 pt-12 text-center sm:px-8 sm:pb-20 sm:pt-14" aria-labelledby="product-title" data-hero>
       <div class="mx-auto max-w-4xl">
         <Badge variant="secondary" className="border-0 bg-[var(--chip)] px-3 py-1 font-mono text-[11px] font-normal text-zinc-200 shadow-none">
           {t.eyebrow}
         </Badge>
-        <h1 id="product-title" class="mt-5 text-5xl font-medium leading-none tracking-tight sm:text-6xl">AnyTTY</h1>
-        <p class="mt-5 text-2xl font-medium leading-snug text-zinc-100 sm:text-3xl">{t.promise}</p>
-        <p class="mx-auto mt-5 max-w-3xl text-base font-normal leading-7 text-zinc-400 sm:text-lg sm:leading-8">{t.lead}</p>
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <h1 id="product-title" class="mt-4 text-5xl font-medium leading-none tracking-tight sm:text-[56px]">AnyTTY</h1>
+        <p class="hero-slogan mx-auto mt-5 max-w-3xl text-base leading-snug text-zinc-300 sm:text-xl" aria-label="Any TTY. Any machine. Any client. Any task. Any time. That's AnyTTY.">
+          <span class="hero-slogan-line">
+            <span>Any TTY.</span><span>Any machine.</span><span>Any client.</span>
+          </span>
+          <span class="hero-slogan-line">
+            <span>Any task.</span><span>Any time.</span><span class="hero-slogan-close">That's <strong>AnyTTY.</strong></span>
+          </span>
+        </p>
+        <p class="mx-auto mt-4 max-w-4xl text-base font-normal leading-7 text-zinc-400 sm:text-lg sm:leading-8">{t.lead}</p>
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
           <a class={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'h-11 px-5 font-normal')} href="#how-it-works">{t.quickStart}<ArrowRight aria-hidden="true" /></a>
           <a class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'h-11 border-[var(--line-strong)] bg-[var(--chip-soft)] px-5 font-normal text-zinc-100 hover:bg-[var(--chip)] hover:text-zinc-100')} href={releaseUrl}>{t.release}<ArrowDownToLine aria-hidden="true" /></a>
         </div>
       </div>
-      <div class="hero-set relative mx-auto mt-12 w-full max-w-6xl [perspective:2400px]">
+      <div class="hero-set relative mx-auto mt-8 w-full max-w-6xl [perspective:2400px]">
         <div class="hero-scroll-image group origin-bottom overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl ring-1 ring-[var(--line)]" data-hero-image>
           <img class="block aspect-[2862/1870] w-full cursor-zoom-in object-cover" src={sitePath('/assets/product/tui-main.webp')} alt={t.previewAlt} width="2862" height="1870" data-image-preview data-image-preview-center data-preview-label={t.tuiLabel} />
         </div>
@@ -275,25 +269,19 @@ const accessIcons = [Cloud, LockKeyhole, Files]
 
   <section id="how-it-works" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="observer-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
             <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.observerEyebrow}</Badge>
             <h2 id="observer-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.observerTitle}</h2>
             <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.observerLead}</p>
-            <div class="mt-8 grid gap-4">
-              {t.observerPoints.map(([title, body], index) => {
-                const Icon = observerIcons[index]
-                return (
-                  <div class="lift-card flex items-start gap-4 rounded-2xl bg-zinc-950 p-5 ring-1 ring-[var(--line)]">
-                    <span class="grid size-10 shrink-0 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300"><Icon className="size-5" aria-hidden="true" /></span>
-                    <div>
-                      <h3 class="text-sm font-medium">{title}</h3>
-                      <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
-                    </div>
-                  </div>
-                )
-              })}
+            <div class="mt-8 grid gap-5">
+              {t.observerPoints.map(([title, body]) => (
+                <div class="border-l border-[var(--line-strong)] py-0.5 pl-4">
+                  <h3 class="text-sm font-medium">{title}</h3>
+                  <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -312,7 +300,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
                   </div>
                   <p class="mt-5 font-mono text-[10px] text-zinc-500">{t.panelDiagram.showing}</p>
                   <div class="mt-1.5 flex items-center gap-2 rounded-md bg-zinc-950 px-2.5 py-2 font-mono text-[11px] text-sky-300 ring-1 ring-[var(--line)]">
-                    <span class={cn('size-1.5 rounded-full', index === 0 ? 'bg-emerald-400' : 'bg-amber-400')} />{terminal[0]} · {terminal[1]}
+                    <span class={cn('size-1.5 rounded-full', index === 0 ? 'bg-emerald-400' : 'bg-zinc-500')} />{terminal[0]} · {terminal[1]}
                   </div>
                 </div>
               ))}
@@ -343,28 +331,21 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     </div>
   </section>
 
-  <section id="workspace" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="workbench-title">
+  <section id="workspace" class="scroll-mt-20 border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="workbench-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
             <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.workbenchEyebrow}</Badge>
             <h2 id="workbench-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.workbenchTitle}</h2>
             <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.workbenchLead}</p>
-            <div class="mt-8 grid gap-4">
-              {t.workbenchPoints.map(([title, body], index) => {
-                const Icon = workbenchIcons[index]
-                const iconColor = index === 0 ? 'bg-sky-400/10 text-sky-300' : index === 1 ? 'bg-emerald-400/10 text-emerald-300' : 'bg-amber-400/10 text-amber-300'
-                return (
-                  <div class="lift-card flex items-start gap-4 rounded-2xl bg-zinc-950 p-5 ring-1 ring-[var(--line)]">
-                    <span class={cn('grid size-10 shrink-0 place-items-center rounded-lg', iconColor)}><Icon className="size-5" aria-hidden="true" /></span>
-                    <div>
-                      <h3 class="text-sm font-medium">{title}</h3>
-                      <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
-                    </div>
-                  </div>
-                )
-              })}
+            <div class="mt-8 grid gap-5">
+              {t.workbenchPoints.map(([title, body]) => (
+                <div class="border-l border-[var(--line-strong)] py-0.5 pl-4">
+                  <h3 class="text-sm font-medium">{title}</h3>
+                  <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+                </div>
+              ))}
             </div>
           </div>
           <div class="relative min-h-[430px] overflow-hidden rounded-2xl bg-zinc-950 p-5 ring-1 ring-[var(--line)] sm:p-6" aria-label={t.workbenchTitle}>
@@ -374,9 +355,9 @@ const accessIcons = [Cloud, LockKeyhole, Files]
                 <span class="font-mono text-[10px] text-sky-300">1 → N</span>
               </div>
               <div class="mt-4 grid grid-cols-3 gap-2">
-                {t.endpointDiagram.panels.map((panel, index) => (
+                {t.endpointDiagram.panels.map((panel) => (
                   <div class="min-w-0 rounded-md bg-zinc-950 px-2 py-3 text-center ring-1 ring-[var(--line)]">
-                    <TerminalSquare className={cn('mx-auto size-4', index === 0 ? 'text-emerald-400' : index === 1 ? 'text-sky-400' : 'text-amber-400')} aria-hidden="true" />
+                    <TerminalSquare className="mx-auto size-4 text-zinc-400" aria-hidden="true" />
                     <span class="mt-1.5 block truncate font-mono text-[10px] text-zinc-400">{panel}</span>
                   </div>
                 ))}
@@ -394,9 +375,9 @@ const accessIcons = [Cloud, LockKeyhole, Files]
                 [Laptop, t.endpointDiagram.local, t.endpointDiagram.routes[0]],
                 [Server, t.endpointDiagram.workstation, t.endpointDiagram.routes[1]],
                 [Database, t.endpointDiagram.server, t.endpointDiagram.routes[2]],
-              ].map(([Icon, name, route], index) => (
+              ].map(([Icon, name, route]) => (
                 <div class="min-w-0 rounded-xl bg-zinc-900 p-3 text-center ring-1 ring-[var(--line-strong)] sm:p-4">
-                  <Icon className={cn('mx-auto size-5', index === 0 ? 'text-emerald-400' : index === 1 ? 'text-sky-400' : 'text-amber-400')} aria-hidden="true" />
+                  <Icon className="mx-auto size-5 text-zinc-400" aria-hidden="true" />
                   <p class="mt-2 truncate text-xs font-medium text-zinc-200">{name}</p>
                   <p class="mt-1 truncate font-mono text-[9px] text-zinc-500 sm:text-[10px]">{route}</p>
                 </div>
@@ -410,7 +391,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
 
   <section id="platforms" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="platform-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="max-w-3xl">
           <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.platformEyebrow}</Badge>
           <h2 id="platform-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.platformTitle}</h2>
@@ -426,15 +407,10 @@ const accessIcons = [Cloud, LockKeyhole, Files]
           </figure>
 
           <div class="grid gap-4">
-            {t.platformPoints.map(([title, body], index) => (
-              <div class="flex items-start gap-4 border-b border-[var(--line)] pb-5 last:border-0 last:pb-0">
-                <span class={cn('grid size-10 shrink-0 place-items-center rounded-lg', index === 0 ? 'bg-sky-400/10 text-sky-300' : 'bg-emerald-400/10 text-emerald-300')}>
-                  {index === 0 ? <TerminalSquare className="size-5" aria-hidden="true" /> : <MonitorSmartphone className="size-5" aria-hidden="true" />}
-                </span>
-                <div>
-                  <h3 class="text-sm font-medium text-zinc-100">{title}</h3>
-                  <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
-                </div>
+            {t.platformPoints.map(([title, body]) => (
+              <div class="border-b border-[var(--line)] pb-5 last:border-0 last:pb-0">
+                <h3 class="text-sm font-medium text-zinc-100">{title}</h3>
+                <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
               </div>
             ))}
           </div>
@@ -452,17 +428,15 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     </div>
   </section>
 
-  <section class="py-20 sm:py-24 lg:py-28" aria-labelledby="history-title">
+  <section class="border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="history-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16">
           <div>
             <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.historyEyebrow}</Badge>
             <h2 id="history-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.historyTitle}</h2>
             <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.historyLead}</p>
-            <div class="lift-card mt-7 flex max-w-2xl items-start gap-3 rounded-2xl bg-zinc-950 p-5 text-sm font-normal leading-6 text-zinc-300 ring-1 ring-[var(--line)]">
-              <History className="mt-0.5 size-5 shrink-0 text-sky-400" aria-hidden="true" />{t.historyNote}
-            </div>
+            <p class="mt-7 max-w-2xl border-l border-[var(--line-strong)] py-0.5 pl-4 text-sm font-normal leading-6 text-zinc-300">{t.historyNote}</p>
           </div>
           <div class="overflow-hidden rounded-2xl bg-zinc-950 ring-1 ring-[var(--line)]" aria-label={t.historyTitle}>
             <div class="border-b border-[var(--line)] px-5 py-4">
@@ -503,25 +477,19 @@ const accessIcons = [Cloud, LockKeyhole, Files]
 
   <section id="clients" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="mobile-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div>
             <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.mobileEyebrow}</Badge>
             <h2 id="mobile-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.mobileTitle}</h2>
             <p class="mt-5 max-w-2xl text-base font-normal leading-7 text-zinc-400">{t.mobileLead}</p>
-            <div class="mt-8 grid gap-4">
-              {t.mobilePoints.map(([title, body], index) => {
-                const Icon = mobileIcons[index]
-                return (
-                  <div class="lift-card flex items-start gap-4 rounded-2xl bg-zinc-950 p-5 ring-1 ring-[var(--line)]">
-                    <span class="grid size-10 shrink-0 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300"><Icon className="size-5" aria-hidden="true" /></span>
-                    <div>
-                      <h3 class="text-sm font-medium">{title}</h3>
-                      <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
-                    </div>
-                  </div>
-                )
-              })}
+            <div class="mt-8 grid gap-5">
+              {t.mobilePoints.map(([title, body]) => (
+                <div class="border-l border-[var(--line-strong)] py-0.5 pl-4">
+                  <h3 class="text-sm font-medium">{title}</h3>
+                  <p class="mt-1 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+                </div>
+              ))}
             </div>
           </div>
           <div>
@@ -557,9 +525,9 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     </div>
   </section>
 
-  <section id="connections" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="access-title">
+  <section id="connections" class="scroll-mt-20 border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="access-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
           <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.accessEyebrow}</Badge>
           <h2 id="access-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.accessTitle}</h2>
@@ -577,17 +545,12 @@ const accessIcons = [Cloud, LockKeyhole, Files]
           <div class="flex shrink-0 items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-200 ring-1 ring-emerald-400/20"><ShieldCheck className="size-4 text-emerald-400" aria-hidden="true" />{t.accessDiagram.daemon}</div>
         </div>
         <div class="mt-4 grid gap-4 md:grid-cols-3">
-          {t.accessPoints.map(([title, body], index) => {
-            const Icon = accessIcons[index]
-            const tone = index === 0 ? 'bg-sky-400/10 text-sky-300' : index === 1 ? 'bg-emerald-400/10 text-emerald-300' : 'bg-amber-400/10 text-amber-300'
-            return (
-              <div class="lift-card rounded-2xl bg-zinc-950 p-6 ring-1 ring-[var(--line)]">
-                <span class={cn('grid size-11 place-items-center rounded-lg', tone)}><Icon aria-hidden="true" /></span>
-                <h3 class="mt-5 text-base font-medium">{title}</h3>
-                <p class="mt-2 text-sm font-normal leading-6 text-zinc-400">{body}</p>
-              </div>
-            )
-          })}
+          {t.accessPoints.map(([title, body]) => (
+            <div class="border-t border-[var(--line-strong)] pt-5">
+              <h3 class="text-base font-medium">{title}</h3>
+              <p class="mt-2 text-sm font-normal leading-6 text-zinc-400">{body}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -618,7 +581,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
             <div class="relative mt-8 space-y-3 before:absolute before:bottom-8 before:left-5 before:top-8 before:w-px before:bg-sky-400/35">
               {t.cloudFeatures.map(([title, body], index) => (
                 <div class="relative flex items-center gap-4 rounded-xl bg-zinc-900 p-4 ring-1 ring-[var(--line)]">
-                  <span class={cn('z-10 grid size-10 shrink-0 place-items-center rounded-lg font-mono text-[11px] ring-1', index === 0 ? 'bg-sky-400/10 text-sky-300 ring-sky-400/20' : index === 1 ? 'bg-emerald-400/10 text-emerald-300 ring-emerald-400/20' : 'bg-amber-400/10 text-amber-300 ring-amber-400/20')}>0{index + 1}</span>
+                  <span class="z-10 grid size-10 shrink-0 place-items-center rounded-lg bg-zinc-950 font-mono text-[11px] text-zinc-400 ring-1 ring-[var(--line-strong)]">0{index + 1}</span>
                   <div>
                     <h3 class="text-sm font-medium text-zinc-100">{title}</h3>
                     <p class="mt-1 text-xs leading-5 text-zinc-500">{body}</p>
@@ -632,9 +595,9 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     </div>
   </section>
 
-  <section id="compare" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="compare-title">
+  <section id="compare" class="scroll-mt-20 border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="compare-title">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="rounded-3xl bg-zinc-900/60 p-6 ring-1 ring-[var(--line)] sm:p-10 lg:p-14">
+      <div class="px-2 sm:px-4 lg:px-8">
         <div class="max-w-3xl">
           <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.compareEyebrow}</Badge>
           <h2 id="compare-title" class="mt-5 text-3xl font-medium leading-tight sm:text-4xl">{t.compareTitle}</h2>
@@ -697,6 +660,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
               androidDownload={t.storeAvailability.androidDownload}
               closeLabel={t.storeAvailability.closeLabel}
               releaseUrl={releaseUrl}
+              appIconUrl={sitePath('/assets/app-icon.webp')}
             />
             <div class="my-7 border-t border-[var(--line)]" />
             <InstallTabs
@@ -1009,7 +973,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     removeActive()
   })
 
-  document.querySelectorAll<HTMLElement>('.float-card, .lift-card').forEach((card) => {
+  document.querySelectorAll<HTMLElement>('.float-card').forEach((card) => {
     card.addEventListener('pointermove', (event) => {
       const rect = card.getBoundingClientRect()
       card.style.setProperty('--ripple-x', `${event.clientX - rect.left}px`)
@@ -1019,6 +983,33 @@ const accessIcons = [Cloud, LockKeyhole, Files]
 </script>
 
 <style>
+  .hero-slogan {
+    font-family: 'Space Grotesk Variable', 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: 'wght' 500;
+  }
+
+  .hero-slogan-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 0.7em;
+  }
+
+  .hero-slogan-close {
+    color: var(--zinc-400);
+  }
+
+  .hero-slogan-close strong {
+    color: var(--zinc-100);
+    font-variation-settings: 'wght' 650;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-set {
+      width: min(100%, calc((100svh - 500px) * 1.5305));
+    }
+  }
+
   .hero-set .hero-scroll-image,
   .hero-set .hero-device {
     transition: box-shadow 300ms ease;
@@ -1125,19 +1116,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     box-shadow: 0 8px 32px rgba(56, 189, 248, 0.16);
   }
 
-  .lift-card {
-    position: relative;
-    overflow: hidden;
-    transition: box-shadow 300ms ease, transform 300ms ease;
-  }
-
-  .lift-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(56, 189, 248, 0.16);
-  }
-
-  .float-card::before,
-  .lift-card::before {
+  .float-card::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -1148,13 +1127,11 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     transition: opacity 250ms ease;
   }
 
-  .float-card:hover::before,
-  .lift-card:hover::before {
+  .float-card:hover::before {
     opacity: 1;
   }
 
-  .float-card::after,
-  .lift-card::after {
+  .float-card::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -1165,8 +1142,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
     transform-origin: var(--ripple-x, 50%) var(--ripple-y, 50%);
   }
 
-  .float-card:hover::after,
-  .lift-card:hover::after {
+  .float-card:hover::after {
     animation: pool-ripple 700ms ease-out;
   }
 
@@ -1217,8 +1193,7 @@ const accessIcons = [Cloud, LockKeyhole, Files]
       animation: none;
     }
 
-    .float-card:hover::after,
-    .lift-card:hover::after {
+    .float-card:hover::after {
       animation: none;
     }
   }

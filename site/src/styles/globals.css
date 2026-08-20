@@ -1,4 +1,5 @@
 @import "@fontsource-variable/geist";
+@import "@fontsource-variable/space-grotesk";
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -149,14 +150,14 @@
   background-image:
     radial-gradient(54% 44% at 50% -6%, #2878c838, transparent 62%),
     radial-gradient(40% 36% at 78% 8%, #2896a51f, transparent 60%),
-    linear-gradient(#0a1a40 0%, #09152e 30%, #08101f 60%, #08080e 84%, #08080a 100%);
+    linear-gradient(#0a1a40 0%, #09152e 30%, #08101f 60%, #08080e 84%, var(--background) 100%);
 }
 
 :root:not(.dark) .hero-cinematic {
   background-image:
     radial-gradient(54% 44% at 50% -6%, rgba(40, 120, 200, 0.18), transparent 62%),
     radial-gradient(40% 36% at 78% 8%, rgba(40, 150, 165, 0.1), transparent 60%),
-    linear-gradient(#f4f7fc 0%, #f7f8fb 40%, #fafafa 100%);
+    linear-gradient(#f4f7fc 0%, #f7f8fb 40%, var(--background) 100%);
 }
 
 .hero-scroll-image {
