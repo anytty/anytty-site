@@ -1,0 +1,147 @@
+---
+import { Mail } from 'lucide-react'
+
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import type { Locale } from '@/lib/site'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const isEnglish = locale === 'en'
+const pathname = isEnglish ? '/privacy/' : '/zh-CN/privacy/'
+const title = isEnglish ? 'Privacy Policy' : '隐私政策'
+const description = isEnglish
+  ? 'How AnyTTY collects, uses, shares, and protects information across its website, apps, and managed services.'
+  : 'AnyTTY 如何在网站、应用及托管服务中收集、使用、共享和保护信息。'
+const updated = isEnglish ? 'Last updated: August 20, 2026' : '最后更新：2026 年 8 月 20 日'
+---
+
+<BaseLayout locale={locale} title={title} description={description} pathname={pathname}>
+  <main id="main" class="mx-auto w-full max-w-7xl px-5 pb-24 pt-14 sm:px-8 sm:pt-20">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20">
+      <article class="min-w-0">
+        <header class="border-b border-[var(--line)] pb-10">
+          <p class="mb-4 font-mono text-xs font-semibold uppercase text-primary">AnyTTY / {isEnglish ? 'Legal' : '法律信息'}</p>
+          <h1 class="text-4xl font-semibold text-foreground sm:text-5xl">{title}</h1>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">{description}</p>
+          <p class="mt-5 text-sm text-muted-foreground">{updated}</p>
+        </header>
+
+        <div class="prose prose-zinc mt-12 max-w-none dark:prose-invert prose-headings:scroll-mt-28 prose-headings:font-semibold prose-headings:tracking-normal prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-li:marker:text-muted-foreground">
+          {isEnglish ? (
+            <>
+              <p>This Privacy Policy explains how AnyTTY ("AnyTTY," "we," "us," or "our") handles information when you use the AnyTTY website, applications, open-source software, and optional managed services (collectively, the "Services").</p>
+
+              <h2 id="scope">1. Scope</h2>
+              <p>This policy applies to Services operated by AnyTTY. It does not apply to third-party websites, services, or independently operated deployments, even when they work with AnyTTY software. The open-source software can run locally or through connections you control; information that remains on your own devices is not collected by AnyTTY.</p>
+
+              <h2 id="information">2. Information we process</h2>
+              <p>Depending on the Services you use, we may process:</p>
+              <ul>
+                <li><strong>Website and diagnostics data:</strong> IP address, browser and device type, requested pages, timestamps, referring pages, crash data, and similar technical logs.</li>
+                <li><strong>Account and service data:</strong> your name, email address, account identifiers, authentication records, service settings, subscription status, invoices, and transaction identifiers.</li>
+                <li><strong>Payment data:</strong> payment providers process payment-card and billing details under their own privacy policies. AnyTTY may receive limited transaction information, such as payment status, amount, currency, and a payment-provider reference. We do not receive or store complete payment-card numbers.</li>
+                <li><strong>Connection data:</strong> device identifiers and labels, pairing and authorization metadata, IP and network information, route diagnostics, and connection timestamps needed to discover devices and establish or troubleshoot a connection.</li>
+                <li><strong>Terminal and file content:</strong> local, SSH, and Direct connections do not route terminal or file content through the AnyTTY managed service. When a managed Relay is used, it forwards encrypted traffic without receiving terminal or file permissions. We process content only as needed to provide a feature you request, investigate a support issue you submit, or comply with law.</li>
+                <li><strong>Communications:</strong> messages, attachments, and contact details you send when requesting support, reporting abuse, or otherwise communicating with us.</li>
+              </ul>
+
+              <h2 id="sources">3. Where information comes from</h2>
+              <p>We receive information directly from you, automatically from your use of the Services, from devices you connect, and from service providers such as identity, hosting, analytics, and payment providers.</p>
+
+              <h2 id="use">4. How we use information</h2>
+              <p>We use information to provide and secure the Services; authenticate accounts and devices; establish requested connections; process subscriptions and transactions; maintain, troubleshoot, and improve reliability; respond to support and abuse reports; communicate service and policy changes; comply with legal obligations; and enforce our agreements.</p>
+
+              <h2 id="legal-bases">5. Legal bases</h2>
+              <p>Where applicable law requires a legal basis, we rely on performance of a contract, our legitimate interests in operating and securing the Services, compliance with legal obligations, and consent where we specifically request it. You may withdraw consent at any time, without affecting earlier processing.</p>
+
+              <h2 id="sharing">6. How we share information</h2>
+              <p>We may share information with vendors that provide infrastructure, authentication, analytics, customer support, communications, fraud prevention, and payment processing; with professional advisers; when required by law or necessary to protect rights, safety, and the Services; in connection with a merger, financing, acquisition, or sale of assets; or when you direct us to share it.</p>
+              <p>We do not sell personal information or share it for cross-context behavioral advertising.</p>
+
+              <h2 id="retention">7. Retention</h2>
+              <p>We retain information only for as long as reasonably necessary for the purposes described above, including providing the Services, maintaining security and business records, resolving disputes, and meeting legal obligations. Retention periods depend on the type of information and why it is processed. You may request deletion of eligible account information by contacting us.</p>
+
+              <h2 id="transfers">8. International transfers</h2>
+              <p>AnyTTY and its providers may process information in countries other than where you live. Where required, we use recognized safeguards for international transfers of personal information.</p>
+
+              <h2 id="security">9. Security</h2>
+              <p>We use administrative, technical, and organizational safeguards designed to protect information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security. Keep credentials and pairing claims confidential, revoke access you no longer need, and contact us if you believe your account or device access has been compromised.</p>
+
+              <h2 id="rights">10. Your choices and rights</h2>
+              <p>Depending on where you live, you may have rights to access, correct, delete, restrict, or object to processing of your personal information, obtain a portable copy, or appeal a decision about a request. You may also lodge a complaint with your local data-protection authority. To submit a request, email us. We may need to verify your identity before completing it.</p>
+
+              <h2 id="children">11. Children</h2>
+              <p>The Services are not directed to children under 13, or a higher minimum age where required by local law. We do not knowingly collect personal information from children below the applicable age. Contact us if you believe a child has provided us with personal information.</p>
+
+              <h2 id="changes">12. Changes to this policy</h2>
+              <p>We may update this policy as the Services or applicable requirements change. We will post the revised policy here, update the date above, and provide additional notice when required by law.</p>
+            </>
+          ) : (
+            <>
+              <p>本隐私政策说明 AnyTTY（“AnyTTY”“我们”）在您使用 AnyTTY 网站、应用、开源软件及可选托管服务（统称“服务”）时如何处理信息。</p>
+
+              <h2 id="scope">1. 适用范围</h2>
+              <p>本政策适用于由 AnyTTY 运营的服务，不适用于第三方网站、第三方服务或独立运营的部署，即使它们与 AnyTTY 软件配合使用。开源软件可以在本地运行，也可以通过您控制的连接运行；仅保留在您自己设备上的信息不会被 AnyTTY 收集。</p>
+
+              <h2 id="information">2. 我们处理的信息</h2>
+              <p>根据您使用的服务，我们可能处理：</p>
+              <ul>
+                <li><strong>网站与诊断数据：</strong>IP 地址、浏览器和设备类型、访问页面、时间戳、来源页面、崩溃数据及类似技术日志。</li>
+                <li><strong>账户与服务数据：</strong>姓名、电子邮箱、账户标识符、身份验证记录、服务设置、订阅状态、发票及交易标识符。</li>
+                <li><strong>支付数据：</strong>支付卡和账单信息由支付服务商依据其隐私政策处理。AnyTTY 可能收到有限的交易信息，例如支付状态、金额、币种及支付服务商的交易编号。我们不会接收或存储完整的支付卡号。</li>
+                <li><strong>连接数据：</strong>设备标识符与名称、配对及授权元数据、IP 和网络信息、路由诊断信息及连接时间，以发现设备、建立连接或排查连接问题。</li>
+                <li><strong>终端与文件内容：</strong>本地、SSH 和 Direct 连接不会通过 AnyTTY 托管服务传输终端或文件内容。使用托管 Relay 时，Relay 仅转发加密流量，不会获得终端或文件权限。只有在提供您请求的功能、调查您提交的支持问题或遵守法律时，我们才会按需处理相关内容。</li>
+                <li><strong>通信内容：</strong>您在寻求支持、举报滥用或以其他方式联系我们时发送的消息、附件及联系方式。</li>
+              </ul>
+
+              <h2 id="sources">3. 信息来源</h2>
+              <p>我们从您本人、您对服务的使用、您连接的设备，以及身份验证、托管、分析和支付等服务提供商处获取信息。</p>
+
+              <h2 id="use">4. 信息用途</h2>
+              <p>我们使用信息来提供和保护服务；验证账户和设备；建立您请求的连接；处理订阅与交易；维护、排查和改善服务可靠性；响应支持和滥用举报；通知服务及政策变更；履行法律义务；以及执行相关协议。</p>
+
+              <h2 id="legal-bases">5. 处理依据</h2>
+              <p>在适用法律要求处理依据时，我们会基于履行合同、运营和保护服务的合法利益、履行法律义务，以及在明确征求时取得的同意来处理信息。您可以随时撤回同意，但这不会影响撤回前处理行为的合法性。</p>
+
+              <h2 id="sharing">6. 信息共享</h2>
+              <p>我们可能与提供基础设施、身份验证、分析、客户支持、通信、欺诈防范及支付处理服务的供应商共享信息；也可能与专业顾问共享，或在法律要求、保护权利与安全、合并、融资、收购或资产出售，以及您指示共享时披露信息。</p>
+              <p>我们不会出售个人信息，也不会为跨场景行为广告共享个人信息。</p>
+
+              <h2 id="retention">7. 信息保留</h2>
+              <p>我们只会在实现上述目的所合理需要的期限内保留信息，包括提供服务、维护安全和业务记录、解决争议及履行法律义务。具体期限取决于信息类型和处理目的。您可以联系我们，请求删除符合条件的账户信息。</p>
+
+              <h2 id="transfers">8. 跨境处理</h2>
+              <p>AnyTTY 及其服务提供商可能在您所在国家或地区之外处理信息。在法律要求时，我们会为个人信息跨境传输采用认可的保护措施。</p>
+
+              <h2 id="security">9. 信息安全</h2>
+              <p>我们采用管理、技术和组织措施来保护信息。任何传输或存储方式都无法保证绝对安全。请妥善保管凭据与配对 claim，及时撤销不再需要的访问权限；如果您认为账户或设备访问已受到威胁，请联系我们。</p>
+
+              <h2 id="rights">10. 您的选择与权利</h2>
+              <p>根据您所在地区，您可能有权访问、更正、删除、限制或反对处理您的个人信息，获取可移植副本，或对请求处理决定提出申诉。您也可以向当地数据保护机构投诉。请通过电子邮件提交请求；在完成请求前，我们可能需要验证您的身份。</p>
+
+              <h2 id="children">11. 未成年人</h2>
+              <p>服务不面向未满 13 周岁的儿童；当地法律规定更高最低年龄的，以该年龄为准。我们不会故意收集未达到适用年龄儿童的个人信息。如果您认为儿童向我们提供了个人信息，请联系我们。</p>
+
+              <h2 id="changes">12. 政策更新</h2>
+              <p>我们可能根据服务或适用要求的变化更新本政策。我们会在本页面发布修订版本、更新上述日期，并在法律要求时另行通知。</p>
+            </>
+          )}
+        </div>
+      </article>
+
+      <aside class="lg:pt-24">
+        <div class="border-l-2 border-primary pl-5 lg:sticky lg:top-28">
+          <p class="text-sm font-semibold text-foreground">{isEnglish ? 'Privacy questions' : '隐私问题'}</p>
+          <p class="mt-2 text-sm leading-6 text-muted-foreground">{isEnglish ? 'Contact us about this policy or a privacy request.' : '如对本政策有疑问或希望提交隐私请求，请联系我们。'}</p>
+          <a class="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring" href="mailto:support@anytty.com">
+            <Mail className="size-4 shrink-0" aria-hidden="true" />
+            support@anytty.com
+          </a>
+        </div>
+      </aside>
+    </div>
+  </main>
+</BaseLayout>
