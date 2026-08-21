@@ -2,7 +2,7 @@
 import CloudLandingPage from '@/components/cloud-landing-page.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 
-const description = 'AnyTTY Cloud 为位于 NAT 或内网中的持久终端提供托管发现、P2P 协商和加密 Relay 兜底。'
+const description = '从 AnyTTY TUI 或手机 App 连接位于 NAT、内网中的持久终端，并使用托管发现、P2P 协商和加密 Relay 兜底。'
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -11,9 +11,9 @@ const structuredData = {
   operatingSystem: 'Linux, macOS, Windows, Android, iOS',
   description,
   offers: [
-    { '@type': 'Offer', name: 'Cloud Free', price: '0', priceCurrency: 'CNY' },
-    { '@type': 'Offer', name: 'Personal Pro 月付', price: '68', priceCurrency: 'CNY' },
-    { '@type': 'Offer', name: 'Power User 月付', price: '138', priceCurrency: 'CNY' },
+    { '@type': 'Offer', name: 'Cloud Free', price: '0', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Personal Pro 月付', price: '9.90', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Power User 月付', price: '19.90', priceCurrency: 'USD' },
   ],
 }
 ---

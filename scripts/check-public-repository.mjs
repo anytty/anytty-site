@@ -8,6 +8,8 @@ const failures = [];
 const requiredRoot = [".gitattributes", ".gitignore", "README.md", "README.zh-CN.md", "LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.txt", "CONTRIBUTING.md", "SECURITY.md", "CODE_OF_CONDUCT.md", "SUPPORT.md", "GOVERNANCE.md", "TRADEMARKS.md", "CHANGELOG.md", "RELEASE_CHECKLIST.md", "docs/SECURITY_BOUNDARY.md", "docs/zh-CN/SECURITY_BOUNDARY.md"];
 const forbiddenPaths = ["cloud/controller", "cloud/edge", "cloud/web", "cloud/deploy", "cloud/integration", "cmd/anytty-cloud-controller", "cmd/anytty-cloud-edge", "deploy", "migrations"];
 const allowedCloudPackages = new Set(["client", "daemon", "protocol", "securetransport", "ticket"]);
+const legacyRasterPattern = /\.(?:bmp|gif|jpe?g|png|tiff?)(?:$|[?#])/i;
+const maxWebImageBytes = 512 * 1024;
 
 async function exists(file) { try { await access(file); return true; } catch { return false; } }
 async function filesBelow(directory) {
@@ -54,6 +56,14 @@ if (!siteOnly) {
 }
 
 const siteRoot = path.join(root, "site", "dist");
+const publicAssetRoot = path.join(root, "site", "public", "assets");
+if (await exists(publicAssetRoot)) {
+  for (const file of await filesBelow(publicAssetRoot)) {
+    const relative = path.relative(root, file);
+    if (legacyRasterPattern.test(file)) failures.push(`${relative} must be converted to WebP or AVIF before it is served`);
+    if (/\.webp$/i.test(file) && (await stat(file)).size > maxWebImageBytes) failures.push(`${relative} exceeds the 512 KiB compressed web-image budget`);
+  }
+}
 if (!(await exists(siteRoot))) failures.push("site artifact is missing; run npm run site:build");
 else {
   const siteFiles = await filesBelow(siteRoot);
@@ -71,6 +81,12 @@ else {
     if (!html.includes("href=\"#main\"") || !html.includes("id=\"main\"")) failures.push(`${relative} missing skip-link target`);
     const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
     if (new Set(ids).size !== ids.length) failures.push(`${relative} has duplicate ids`);
+    for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
+      const image = match[0];
+      const source = image.match(/\ssrc="([^"]+)"/i)?.[1];
+      if (source && legacyRasterPattern.test(source)) failures.push(`${relative} loads a legacy raster image: ${source}`);
+      if (!/\swidth="\d+"/i.test(image) || !/\sheight="\d+"/i.test(image)) failures.push(`${relative} has an image without explicit width and height`);
+    }
     for (const match of html.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
       const url = match[1];
       if (/^(?:https?:|#|mailto:)/.test(url)) continue;

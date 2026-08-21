@@ -11,6 +11,7 @@ import {
   Server,
   ShieldCheck,
   Smartphone,
+  TerminalSquare,
 } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -24,23 +25,29 @@ const { locale } = Astro.props
 const copy = {
   en: {
     eyebrow: 'Optional managed connectivity for AnyTTY',
-    lead: 'Reach persistent terminals on computers behind NAT. Cloud discovers the paired endpoint, tries a direct P2P path first, and relays encrypted traffic only when the network requires it.',
+    lead: 'Reach persistent terminals on computers behind NAT from the AnyTTY TUI or mobile app. Cloud discovers the paired endpoint, tries a direct P2P path first, and relays encrypted traffic only when the network requires it.',
     openConsole: 'Open Cloud console', docs: 'Read Cloud docs', pricingLink: 'See pricing',
-    proof: 'Works with the open-source AnyTTY clients and daemon',
-    routeLabel: 'The Cloud connection path', client: 'Paired client', discovery: 'Cloud discovery', daemon: 'Endpoint daemon',
+    proof: 'One Cloud path for the TUI, web, phone, and tablet',
+    routeLabel: 'The Cloud connection path', client: 'AnyTTY TUI / App', discovery: 'Cloud discovery', daemon: 'Endpoint daemon',
     direct: 'Direct P2P when possible', relay: 'Encrypted Relay fallback',
     explainEyebrow: 'How it works', explainTitle: 'One route to the machine you already trust.',
     explainLead: 'Cloud handles reachability. Pairing, terminal access, and file permissions still belong to the endpoint you control.',
     steps: [
       ['Register the daemon', 'Sign in to Cloud, create a one-time enrollment command, and run it on the computer you want to reach.'],
-      ['Pair the client', 'Scan the QR code produced by the target service. Each client keeps its paired endpoints on that device.'],
+      ['Pair the client', 'Pair the AnyTTY TUI or mobile app with the target service. Each client keeps its endpoints on that device.'],
       ['Connect from anywhere', 'Cloud negotiates P2P first and switches to an encrypted Relay only when direct networking fails.'],
     ],
-    productEyebrow: 'AnyTTY stays AnyTTY', productTitle: 'Cloud changes how you reach the terminal, not where the work runs.',
-    productLead: 'Your shells, coding agents, and files remain on the endpoint daemon. Move between the TUI, web, phone, and tablet without moving the task itself.',
-    desktopAlt: 'AnyTTY workspace with persistent terminals running across several computers',
+    productEyebrow: 'TUI or mobile app', productTitle: 'Use the same Cloud-connected endpoint from the TUI or your phone.',
+    productLead: 'The client changes; the task does not. Shells, coding agents, and files remain on the endpoint daemon while Cloud gives each paired client a reliable route back.',
+    tuiLabel: 'AnyTTY TUI', tuiTitle: 'Keyboard-first on another computer',
+    tuiBody: 'Open a paired endpoint in the AnyTTY TUI, arrange several remote terminals in one workspace, and keep the full keyboard workflow when you move between machines.',
+    tuiMeta: 'macOS · Linux · Windows',
+    appLabel: 'AnyTTY App', appTitle: 'Carry the same terminal with you',
+    appBody: 'Open the paired endpoint from iOS or Android, check a running task, and continue with touch controls when you are away from a computer.',
+    appMeta: 'iOS · Android',
+    desktopAlt: 'AnyTTY TUI showing several persistent terminals reached through Cloud',
     mobileAlt: 'AnyTTY mobile client connected to a persistent terminal',
-    desktopCaption: 'The same persistent workspace on the endpoint', mobileCaption: 'Continue from a paired phone',
+    desktopCaption: 'Cloud-connected endpoint in the AnyTTY TUI', mobileCaption: 'The same endpoint from the mobile app',
     productPoints: [
       ['No App account sync', 'The mobile app does not populate devices from a Cloud account. Pair each client with the target service.'],
       ['Endpoint-controlled access', 'The daemon authenticates the connection and decides which terminals and files are available.'],
@@ -48,14 +55,14 @@ const copy = {
     ],
     pricingEyebrow: 'Pricing', pricingTitle: 'Start free. Add Cloud capacity when you need it.',
     pricingLead: 'Every plan includes managed discovery, P2P negotiation, and Relay fallback. Direct and SSH connections do not require a Cloud subscription.',
-    monthly: 'month', yearly: 'year', free: 'Free', popular: 'Most useful for one person', choose: 'Choose', start: 'Start free',
+    monthly: 'month', free: 'Free', popular: 'Most useful for one person', choose: 'Choose', start: 'Start free',
     planFeatures: {
       daemons: (count: number) => `${count} registered daemons`,
       p2p: 'Managed P2P included',
       relay: (count: number) => `${count} concurrent Relay connection${count === 1 ? '' : 's'}`,
       data: (amount: string) => `${amount} Relay traffic per period`,
     },
-    priceNote: 'Prices are shown in CNY. Applicable taxes and the final total are shown at checkout. Paid subscriptions can be canceled from the Cloud account and remain active through the current billing period.',
+    priceNote: 'Prices are shown in USD and billed monthly. Applicable taxes and the final total are shown at checkout. Paid subscriptions can be canceled from the Cloud account and remain active through the current billing period.',
     securityEyebrow: 'Security boundary', securityTitle: 'Cloud can route a connection. It cannot grant terminal access.',
     securityLead: 'A Cloud account manages daemon enrollment, routing, Relay capacity, usage, and billing. It does not replace endpoint pairing or daemon authorization.',
     securityItems: [
@@ -64,28 +71,34 @@ const copy = {
       ['Subscriptions stay manageable', 'View usage, change plans, and cancel renewal directly from the Cloud console.'],
     ],
     ctaTitle: 'Connect the computer that is hard to reach.',
-    ctaLead: 'Create a free Cloud account, register one daemon, and keep using the AnyTTY clients you already have.',
+    ctaLead: 'Create a free Cloud account, register one daemon, then connect from the AnyTTY TUI or mobile app.',
     cta: 'Open Cloud console', ctaDocs: 'Review the security model',
   },
   'zh-CN': {
     eyebrow: 'AnyTTY 的可选托管连接服务',
-    lead: '连接位于 NAT 或内网中的持久终端。Cloud 先发现已配对的 endpoint，优先协商 P2P 直连，只有网络无法直连时才通过 Relay 转发加密流量。',
+    lead: '从 AnyTTY TUI 或手机 App 连接位于 NAT、内网中的持久终端。Cloud 先发现已配对的 endpoint，优先协商 P2P 直连，只有网络无法直连时才通过 Relay 转发加密流量。',
     openConsole: '进入 Cloud 控制台', docs: '阅读 Cloud 文档', pricingLink: '查看价格',
-    proof: '与开源 AnyTTY 客户端及 daemon 配合使用',
-    routeLabel: 'Cloud 连接路径', client: '已配对客户端', discovery: 'Cloud 发现与协商', daemon: 'Endpoint daemon',
+    proof: 'TUI、Web、手机和平板共用一条 Cloud 连接路径',
+    routeLabel: 'Cloud 连接路径', client: 'AnyTTY TUI / App', discovery: 'Cloud 发现与协商', daemon: 'Endpoint daemon',
     direct: '网络允许时直接 P2P', relay: '无法直连时使用加密 Relay',
     explainEyebrow: '工作方式', explainTitle: '找到你已经信任的那台机器。',
     explainLead: 'Cloud 只解决网络可达性；配对、终端访问和文件权限仍由你控制的 endpoint 决定。',
     steps: [
       ['注册 daemon', '登录 Cloud，生成一次性接入命令，再在需要远程访问的电脑上运行。'],
-      ['配对客户端', '扫描目标服务生成的二维码。每个客户端只在当前设备保存自己配对的 endpoint。'],
+      ['配对客户端', '让 AnyTTY TUI 或手机 App 与目标服务完成配对。每个客户端只在当前设备保存 endpoint。'],
       ['随时连接', 'Cloud 优先协商 P2P；只有直连失败时，才自动切换到加密 Relay。'],
     ],
-    productEyebrow: 'AnyTTY 仍然是 AnyTTY', productTitle: 'Cloud 改变的是连接路径，不是任务运行的位置。',
-    productLead: 'Shell、编程 Agent 和文件仍在 endpoint daemon 上运行。你可以在 TUI、Web、手机和平板之间切换，而无需迁移任务。',
-    desktopAlt: 'AnyTTY 工作台同时显示多台电脑上的持久终端',
+    productEyebrow: 'TUI 或手机 App', productTitle: '同一个 Cloud endpoint，既能在 TUI 使用，也能在手机上继续。',
+    productLead: '变化的是客户端，不是任务。Shell、编程 Agent 和文件始终留在 endpoint daemon 上，Cloud 为每个已配对客户端提供可靠的返回路径。',
+    tuiLabel: 'AnyTTY TUI', tuiTitle: '在另一台电脑上保持键盘工作流',
+    tuiBody: '从 AnyTTY TUI 打开已配对 endpoint，把多个远程终端排在同一个工作区；换到另一台电脑时，依然保留完整的键盘操作。',
+    tuiMeta: 'macOS · Linux · Windows',
+    appLabel: 'AnyTTY App', appTitle: '把同一个终端带在身边',
+    appBody: '从 iOS 或 Android 打开已配对 endpoint，离开电脑后也能查看运行中的任务，并用触控操作继续处理。',
+    appMeta: 'iOS · Android',
+    desktopAlt: 'AnyTTY TUI 通过 Cloud 连接多个持久终端',
     mobileAlt: 'AnyTTY 手机客户端连接到持久终端',
-    desktopCaption: '任务仍在 endpoint 的持久工作台中', mobileCaption: '从已配对手机继续操作',
+    desktopCaption: '在 AnyTTY TUI 中打开 Cloud endpoint', mobileCaption: '从手机 App 继续同一个 endpoint',
     productPoints: [
       ['App 不做账号同步', '移动 App 不会从 Cloud 账号自动填充设备；每个客户端都要与目标服务明确配对。'],
       ['访问权由 endpoint 决定', 'daemon 负责验证连接，并决定可以访问哪些终端和文件。'],
@@ -93,14 +106,14 @@ const copy = {
     ],
     pricingEyebrow: '套餐价格', pricingTitle: '先免费使用，需要时再增加 Cloud 容量。',
     pricingLead: '每个套餐都包含托管发现、P2P 协商和 Relay 兜底。Direct 与 SSH 连接不需要 Cloud 订阅。',
-    monthly: '月', yearly: '年', free: '免费', popular: '适合长期个人使用', choose: '选择', start: '免费开始',
+    monthly: '月', free: '免费', popular: '适合长期个人使用', choose: '选择', start: '免费开始',
     planFeatures: {
       daemons: (count: number) => `${count} 个已注册 daemon`,
       p2p: '包含托管 P2P',
       relay: (count: number) => `${count} 路 Relay 并发`,
       data: (amount: string) => `每周期 ${amount} Relay 流量`,
     },
-    priceNote: '价格以人民币显示，适用税费和最终总额会在结账页面列明。付费订阅可在 Cloud 账号中取消续订，并继续使用到当前计费周期结束。',
+    priceNote: '价格以美元（USD）按月显示，适用税费和最终总额会在结账页面列明。付费订阅可在 Cloud 账号中取消续订，并继续使用到当前计费周期结束。',
     securityEyebrow: '安全边界', securityTitle: 'Cloud 可以建立路径，但不能授予终端权限。',
     securityLead: 'Cloud 账号用于 daemon 接入、路由、Relay 容量、用量和账单管理，不会代替 endpoint 配对和 daemon 授权。',
     securityItems: [
@@ -109,15 +122,15 @@ const copy = {
       ['订阅可以自助管理', '用户可以直接在 Cloud 控制台查看用量、更换套餐并取消续订。'],
     ],
     ctaTitle: '连接那台藏在内网里的电脑。',
-    ctaLead: '创建免费的 Cloud 账号，注册一台 daemon，然后继续使用你已有的 AnyTTY 客户端。',
+    ctaLead: '创建免费的 Cloud 账号，注册一台 daemon，然后从 AnyTTY TUI 或手机 App 连接。',
     cta: '进入 Cloud 控制台', ctaDocs: '查看安全模型',
   },
 } as const
 
 const plans = [
-  { name: 'Cloud Free', monthly: 0, yearly: 0, daemons: 2, relay: 1, data: '200 MB', featured: false },
-  { name: 'Personal Pro', monthly: 68, yearly: 648, daemons: 10, relay: 3, data: '20 GB', featured: true },
-  { name: 'Power User', monthly: 138, yearly: 1288, daemons: 30, relay: 8, data: '100 GB', featured: false },
+  { name: 'Cloud Free', monthly: 0, daemons: 2, relay: 1, data: '200 MB', featured: false },
+  { name: 'Personal Pro', monthly: 9.9, daemons: 10, relay: 3, data: '20 GB', featured: true },
+  { name: 'Power User', monthly: 19.9, daemons: 30, relay: 8, data: '100 GB', featured: false },
 ] as const
 
 const t = copy[locale]
@@ -131,10 +144,13 @@ const consoleUrl = 'https://cloud.anytty.com/login'
     <img
       class="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-40"
       src={sitePath('/assets/product/mac-tui.webp')}
+      srcset={`${sitePath('/assets/product/mac-tui-960.webp')} 960w, ${sitePath('/assets/product/mac-tui.webp')} 1800w`}
+      sizes="100vw"
       alt=""
       width="1800"
       height="1125"
       fetchpriority="high"
+      decoding="async"
     />
     <div class="absolute inset-0 -z-10 bg-zinc-950/75" aria-hidden="true"></div>
 
@@ -155,7 +171,7 @@ const consoleUrl = 'https://cloud.anytty.com/login'
 
       <div class="overflow-hidden rounded-lg border border-white/15 bg-zinc-950/85 backdrop-blur-md" aria-label={t.routeLabel}>
         <div class="grid grid-cols-3 gap-px bg-white/10 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
-          <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><Smartphone className="size-5 text-sky-300" aria-hidden="true" /><span class="text-xs font-medium sm:text-sm">{t.client}</span></div>
+          <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><span class="flex items-center gap-1.5 text-sky-300" aria-hidden="true"><TerminalSquare className="size-5" /><Smartphone className="size-4" /></span><span class="text-xs font-medium sm:text-sm">{t.client}</span></div>
           <div class="hidden items-center bg-zinc-950/90 px-2 text-zinc-600 md:flex" aria-hidden="true"><ArrowRight className="size-4" /></div>
           <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><Network className="size-5 text-emerald-300" aria-hidden="true" /><span class="text-xs font-medium sm:text-sm">{t.discovery}</span></div>
           <div class="hidden items-center bg-zinc-950/90 px-2 text-zinc-600 md:flex" aria-hidden="true"><ArrowRight className="size-4" /></div>
@@ -190,32 +206,66 @@ const consoleUrl = 'https://cloud.anytty.com/login'
 
   <section class="border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-product-title">
     <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-      <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
-        <div>
-          <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.productEyebrow}</Badge>
-          <h2 id="cloud-product-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.productTitle}</h2>
-          <p class="mt-5 text-base leading-7 text-zinc-400">{t.productLead}</p>
-          <div class="mt-8 grid gap-5">
-            {t.productPoints.map(([title, body], index) => {
-              const Icon = [QrCode, KeyRound, LockKeyhole][index]
-              return <div class="grid grid-cols-[auto_1fr] gap-4 border-t border-[var(--line)] pt-5">
-                <Icon className="mt-0.5 size-5 text-sky-400" aria-hidden="true" />
-                <div><h3 class="text-sm font-medium">{title}</h3><p class="mt-1 text-sm leading-6 text-zinc-400">{body}</p></div>
-              </div>
-            })}
-          </div>
-        </div>
+      <div class="max-w-4xl">
+        <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.productEyebrow}</Badge>
+        <h2 id="cloud-product-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.productTitle}</h2>
+        <p class="mt-5 max-w-3xl text-base leading-7 text-zinc-400">{t.productLead}</p>
+      </div>
 
-        <div class="grid grid-cols-[minmax(0,1fr)_minmax(92px,0.26fr)] items-end gap-3 sm:gap-5">
-          <figure class="overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)]">
-            <img class="block aspect-[1800/1125] w-full object-cover" src={sitePath('/assets/product/mac-tui.webp')} alt={t.desktopAlt} width="1800" height="1125" loading="lazy" />
+      <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.58fr)_minmax(280px,0.42fr)] lg:gap-8">
+        <article class="min-w-0 border-y border-[var(--line)] py-6">
+          <div class="grid gap-4 sm:grid-cols-[auto_1fr_auto] sm:items-start">
+            <span class="flex size-10 items-center justify-center rounded-md bg-sky-400/10 text-sky-400"><TerminalSquare className="size-5" aria-hidden="true" /></span>
+            <div><p class="font-mono text-[10px] text-sky-400">{t.tuiLabel}</p><h3 class="mt-2 text-xl font-medium">{t.tuiTitle}</h3><p class="mt-2 max-w-2xl text-sm leading-6 text-zinc-400">{t.tuiBody}</p></div>
+            <span class="font-mono text-[10px] text-zinc-500 sm:pt-1">{t.tuiMeta}</span>
+          </div>
+          <figure class="mt-6 overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)]">
+            <img
+              class="block aspect-[1800/1125] w-full object-cover"
+              src={sitePath('/assets/product/mac-tui.webp')}
+              srcset={`${sitePath('/assets/product/mac-tui-960.webp')} 960w, ${sitePath('/assets/product/mac-tui.webp')} 1800w`}
+              sizes="(min-width: 1024px) 70vw, 100vw"
+              alt={t.desktopAlt}
+              width="1800"
+              height="1125"
+              loading="lazy"
+              decoding="async"
+            />
             <figcaption class="border-t border-[var(--line)] px-4 py-3 font-mono text-[10px] text-zinc-400">{t.desktopCaption}</figcaption>
           </figure>
-          <figure class="overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)]">
-            <img class="block aspect-[480/1068] w-full object-cover" src={sitePath('/assets/product/mobile-terminal.webp')} alt={t.mobileAlt} width="480" height="1068" loading="lazy" />
-            <figcaption class="hidden border-t border-[var(--line)] px-3 py-3 font-mono text-[9px] text-zinc-400 sm:block">{t.mobileCaption}</figcaption>
+        </article>
+
+        <article class="min-w-0 border-y border-[var(--line)] py-6">
+          <div class="grid gap-4">
+            <span class="flex size-10 items-center justify-center rounded-md bg-emerald-400/10 text-emerald-400"><Smartphone className="size-5" aria-hidden="true" /></span>
+            <div><p class="font-mono text-[10px] text-emerald-400">{t.appLabel}</p><h3 class="mt-2 text-xl font-medium">{t.appTitle}</h3><p class="mt-2 text-sm leading-6 text-zinc-400">{t.appBody}</p></div>
+            <span class="font-mono text-[10px] text-zinc-500">{t.appMeta}</span>
+          </div>
+          <figure class="mx-auto mt-6 max-w-80 overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)] lg:max-w-none">
+            <img
+              class="block aspect-[480/1068] w-full object-cover"
+              src={sitePath('/assets/product/mobile-terminal.webp')}
+              srcset={`${sitePath('/assets/product/mobile-terminal-320.webp')} 320w, ${sitePath('/assets/product/mobile-terminal.webp')} 480w`}
+              sizes="(min-width: 1024px) 320px, 80vw"
+              alt={t.mobileAlt}
+              width="480"
+              height="1068"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="border-t border-[var(--line)] px-3 py-3 font-mono text-[9px] text-zinc-400">{t.mobileCaption}</figcaption>
           </figure>
-        </div>
+        </article>
+      </div>
+
+      <div class="mt-10 grid gap-6 border-y border-[var(--line)] md:grid-cols-3">
+        {t.productPoints.map(([title, body], index) => {
+          const Icon = [QrCode, KeyRound, LockKeyhole][index]
+          return <div class="grid grid-cols-[auto_1fr] gap-4 py-6 md:px-6 md:first:pl-0 md:last:pr-0 md:[&+&]:border-l md:[&+&]:border-[var(--line)]">
+            <Icon className="mt-0.5 size-5 text-sky-400" aria-hidden="true" />
+            <div><h3 class="text-sm font-medium">{title}</h3><p class="mt-1 text-sm leading-6 text-zinc-400">{body}</p></div>
+          </div>
+        })}
       </div>
     </div>
   </section>
@@ -238,7 +288,7 @@ const consoleUrl = 'https://cloud.anytty.com/login'
             <div class="mt-7 min-h-16">
               {plan.monthly === 0
                 ? <strong class="text-4xl font-semibold tracking-normal">{t.free}</strong>
-                : <><strong class="text-4xl font-semibold tracking-normal">¥{plan.monthly}</strong><span class="ml-1 text-sm text-zinc-400">/ {t.monthly}</span><p class="mt-2 font-mono text-[11px] text-zinc-500">¥{plan.yearly} / {t.yearly}</p></>}
+                : <><strong class="font-mono text-4xl font-semibold tracking-normal">${plan.monthly.toFixed(2)}</strong><span class="ml-1 text-sm text-zinc-400">/ {t.monthly}</span></>}
             </div>
             <ul class="mt-7 grid gap-3 border-t border-[var(--line)] pt-6 text-sm text-zinc-400">
               {[t.planFeatures.daemons(plan.daemons), t.planFeatures.p2p, t.planFeatures.relay(plan.relay), t.planFeatures.data(plan.data)].map((feature) => (
