@@ -1,0 +1,134 @@
+---
+import { FileText, Mail } from 'lucide-react'
+
+import { localizedPath, sitePath, type Locale } from '@/lib/site'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+const isEnglish = locale === 'en'
+const pathname = isEnglish ? '/terms/' : '/zh-CN/terms/'
+const title = isEnglish ? 'Terms of Service' : '服务条款'
+const description = isEnglish
+  ? 'Terms governing AnyTTY websites, software, accounts, and optional managed Cloud services.'
+  : '适用于 AnyTTY 网站、软件、账号及可选 Cloud 托管服务的条款。'
+---
+
+<main id="main" class="pb-20 sm:pb-24">
+  <section class="border-b border-[var(--line)] bg-zinc-950/30">
+    <div class="mx-auto max-w-4xl px-5 py-14 sm:px-8 sm:py-20">
+      <span class="font-mono text-xs font-medium uppercase text-sky-400">AnyTTY · Legal</span>
+      <h1 class="mt-4 text-4xl font-semibold tracking-normal sm:text-5xl">{title}</h1>
+      <p class="mt-4 max-w-2xl text-base leading-7 text-zinc-400">{description}</p>
+      <p class="mt-5 font-mono text-xs text-zinc-500">{isEnglish ? 'Effective: August 22, 2026' : '生效日期：2026 年 8 月 22 日'}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto grid max-w-4xl gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[180px_minmax(0,1fr)] lg:py-16">
+    <aside>
+      <div class="sticky top-28 flex items-center gap-3 text-sm text-zinc-400"><FileText className="size-5 text-sky-400" aria-hidden="true" />{isEnglish ? 'Service terms' : '服务约定'}</div>
+    </aside>
+
+    <article class="prose prose-zinc max-w-none dark:prose-invert prose-headings:tracking-normal prose-a:text-sky-400 prose-a:underline-offset-4 prose-p:leading-7 prose-li:leading-7">
+      {isEnglish ? (
+        <>
+          <p>These Terms of Service ("Terms") govern access to AnyTTY websites, applications, open-source software, accounts, and optional managed services (collectively, the "Services"). By creating an account, purchasing a plan, or using a managed Service, you agree to these Terms.</p>
+
+          <h2>1. The Services</h2>
+          <p>AnyTTY provides terminal and file access tools. AnyTTY Cloud is an optional managed service for daemon enrollment, endpoint discovery, connection routing, P2P negotiation, encrypted Relay fallback, usage measurement, and subscription management. Endpoint daemons continue to authenticate connections and enforce terminal and file permissions.</p>
+          <p>Open-source components remain governed by their published licenses. These Terms govern the hosted Services and do not replace the license terms for open-source code.</p>
+
+          <h2>2. Accounts and security</h2>
+          <p>You must provide accurate account information, protect your credentials and pairing claims, and promptly revoke access you no longer trust. You are responsible for activity performed through your account unless caused by our failure to use reasonable safeguards.</p>
+          <p>You may use the Services only to access systems and data that you own or are authorized to use.</p>
+
+          <h2>3. Acceptable use</h2>
+          <p>You must not use the Services to gain unauthorized access, distribute malware, interfere with networks or other users, evade service limits, violate applicable law, infringe intellectual property, or provide a competing shared Relay or resale service without written permission. We may limit or suspend activity that creates a security, legal, or operational risk.</p>
+
+          <h2>4. Plans, billing, and taxes</h2>
+          <p>Current plan features and prices are displayed on the <a href={sitePath('/cloud/')}>AnyTTY Cloud page</a>. Paid plans renew for the billing period shown at checkout until canceled. Creem acts as merchant of record for eligible transactions and displays the applicable currency, taxes, and final total before payment. Your checkout and receipt identify the seller for that transaction.</p>
+          <p>Plan limits may include registered daemons, Relay concurrency, traffic, rate, or regions. Usage above an active entitlement may be limited rather than billed automatically unless an additional purchase is clearly presented and accepted.</p>
+
+          <h2>5. Cancellation and refunds</h2>
+          <p>You can cancel automatic renewal directly from the Cloud subscription page. Unless the checkout states otherwise, cancellation takes effect at the end of the current paid period and access continues until then. Cancel before the renewal date to avoid the next charge.</p>
+          <p>For billing errors or refund requests, contact <a href="mailto:support@anytty.com">support@anytty.com</a>. Refunds are handled according to applicable law, the checkout terms, and the merchant-of-record process. Nothing in these Terms limits mandatory consumer rights.</p>
+
+          <h2>6. Availability and changes</h2>
+          <p>We work to keep managed Services available, but do not promise uninterrupted operation or a service level unless a separate written agreement says so. Networks, endpoint availability, NAT behavior, third-party infrastructure, maintenance, and security incidents can affect connectivity.</p>
+          <p>We may change or retire features and plans. Material changes affecting an active paid plan will be communicated reasonably in advance when practicable. We will not retroactively charge a new price without presenting it before renewal or purchase.</p>
+
+          <h2>7. Your data and privacy</h2>
+          <p>Our <a href={sitePath('/privacy/')}>Privacy Policy</a> explains how information is handled. You retain rights to your terminal content and files. You grant us only the limited rights needed to route encrypted traffic, operate the Services, prevent abuse, provide support, and meet legal obligations.</p>
+
+          <h2>8. Intellectual property</h2>
+          <p>AnyTTY names, branding, hosted interfaces, and non-open-source service materials are protected by applicable intellectual-property laws. These Terms do not grant rights to use AnyTTY branding in a way that suggests endorsement or an official hosted service.</p>
+
+          <h2>9. Suspension and termination</h2>
+          <p>You may stop using the Services and request deletion of eligible account data. We may suspend or terminate access for material breach, fraud, security threats, unlawful activity, or nonpayment. When reasonable, we will provide notice and an opportunity to correct the issue.</p>
+
+          <h2>10. Disclaimers and liability</h2>
+          <p>To the extent permitted by law, the Services are provided on an "as available" basis without warranties not expressly stated in these Terms. You remain responsible for endpoint security, backups, commands executed through terminals, and the systems you choose to access.</p>
+          <p>To the extent permitted by law, AnyTTY is not liable for indirect, incidental, special, consequential, or punitive damages, or for lost profits, data, or business opportunities. Any aggregate liability relating to a paid Service will not exceed the amount you paid for that Service during the twelve months before the event giving rise to the claim. These limits do not apply where prohibited by law.</p>
+
+          <h2>11. Changes to these Terms</h2>
+          <p>We may update these Terms as the Services or legal requirements change. The current version and effective date will remain available on this page. If a material update requires consent, we will request it before the update applies to you.</p>
+
+          <h2>12. Contact</h2>
+          <p>Questions about these Terms, billing, or the hosted Services can be sent to <a href="mailto:support@anytty.com">support@anytty.com</a>.</p>
+        </>
+      ) : (
+        <>
+          <p>本服务条款（“条款”）适用于 AnyTTY 网站、应用、开源软件、账号以及可选的托管服务（统称“服务”）。创建账号、购买套餐或使用托管服务，即表示你同意本条款。</p>
+
+          <h2>1. 服务内容</h2>
+          <p>AnyTTY 提供终端和文件访问工具。AnyTTY Cloud 是可选的托管服务，用于 daemon 接入、endpoint 发现、连接路由、P2P 协商、加密 Relay 兜底、用量统计和订阅管理。Endpoint daemon 始终负责验证连接并执行终端和文件权限。</p>
+          <p>开源组件继续适用其公开许可证。本条款适用于托管服务，不会取代开源代码的许可证条款。</p>
+
+          <h2>2. 账号与安全</h2>
+          <p>你必须提供准确的账号信息，妥善保护登录凭据和配对 claim，并及时撤销不再信任的访问。除非相关活动由我们未采取合理安全措施直接导致，你应对通过自己账号进行的活动负责。</p>
+          <p>你只能使用服务访问自己拥有或已获授权使用的系统和数据。</p>
+
+          <h2>3. 可接受使用</h2>
+          <p>不得使用服务实施未授权访问、传播恶意软件、干扰网络或其他用户、规避服务限制、违反适用法律、侵犯知识产权，或未经书面许可提供竞争性的共享 Relay 或转售服务。对于造成安全、法律或运营风险的活动，我们可以限制或暂停服务。</p>
+
+          <h2>4. 套餐、账单与税费</h2>
+          <p>当前套餐能力和价格显示在 <a href={sitePath('/zh-CN/cloud/')}>AnyTTY Cloud 页面</a>。付费套餐会按照结账时列明的周期自动续订，直到用户取消。对于符合条件的交易，Creem 作为 Merchant of Record，并会在付款前显示适用币种、税费和最终总额；结账页和收据会标明该笔交易的销售方。</p>
+          <p>套餐限制可能包括已注册 daemon 数量、Relay 并发、流量、速率或区域。超出当前权益时，服务可能被限制；除非系统清楚展示额外购买并获得你的确认，否则不会自动收取超量费用。</p>
+
+          <h2>5. 取消与退款</h2>
+          <p>你可以直接在 Cloud 订阅页面取消自动续订。除非结账页另有说明，取消会在当前付费周期结束时生效，在此之前仍可继续使用服务。请在续费日期前取消，以避免下一周期扣款。</p>
+          <p>如遇账单错误或需要申请退款，请联系 <a href="mailto:support@anytty.com">support@anytty.com</a>。退款将按照适用法律、结账条款和 Merchant of Record 流程处理。本条款不限制法律规定的强制性消费者权利。</p>
+
+          <h2>6. 可用性与变更</h2>
+          <p>我们会努力维持托管服务可用，但除非另有书面协议，不承诺服务不中断或特定服务等级。网络、endpoint 状态、NAT 行为、第三方基础设施、维护和安全事件都可能影响连接。</p>
+          <p>我们可能调整或停止功能与套餐。对于影响现有付费套餐的重大变化，在可行情况下会合理提前通知。未经续费或购买前明确展示，我们不会追溯收取新的价格。</p>
+
+          <h2>7. 数据与隐私</h2>
+          <p>我们的<a href={sitePath('/zh-CN/privacy/')}>隐私政策</a>说明信息处理方式。你保留对终端内容和文件的权利；你只授予我们为转发加密流量、运营服务、防止滥用、提供支持和履行法律义务所必需的有限权利。</p>
+
+          <h2>8. 知识产权</h2>
+          <p>AnyTTY 名称、品牌、托管界面和非开源服务材料受适用知识产权法律保护。本条款不会授予以暗示 AnyTTY 背书或官方托管服务的方式使用 AnyTTY 品牌的权利。</p>
+
+          <h2>9. 暂停与终止</h2>
+          <p>你可以停止使用服务并请求删除符合条件的账号数据。对于重大违约、欺诈、安全威胁、违法活动或欠费，我们可以暂停或终止访问。在合理情况下，我们会发出通知并提供纠正问题的机会。</p>
+
+          <h2>10. 免责声明与责任限制</h2>
+          <p>在法律允许范围内，服务按“可用状态”提供，不附带本条款未明确说明的保证。你仍需对 endpoint 安全、备份、通过终端执行的命令以及选择访问的系统负责。</p>
+          <p>在法律允许范围内，AnyTTY 不对间接、附带、特殊、后果性或惩罚性损害，以及利润、数据或商业机会损失负责。与付费服务相关的责任总额不超过引发索赔事件前十二个月内你为该服务支付的金额。法律禁止限制的责任不适用上述限制。</p>
+
+          <h2>11. 条款变更</h2>
+          <p>服务或法律要求变化时，我们可能更新本条款。当前版本和生效日期会持续在本页面提供。如果重大更新依法需要同意，我们会在其对你生效前请求确认。</p>
+
+          <h2>12. 联系方式</h2>
+          <p>有关本条款、账单或托管服务的问题，请发送邮件至 <a href="mailto:support@anytty.com">support@anytty.com</a>。</p>
+        </>
+      )}
+
+      <div class="not-prose mt-12 flex flex-wrap items-center gap-4 border-t border-[var(--line)] pt-8 text-sm">
+        <a class="inline-flex min-h-11 items-center gap-2 text-sky-400 underline-offset-4 hover:underline" href="mailto:support@anytty.com"><Mail className="size-4" aria-hidden="true" />support@anytty.com</a>
+        <a class="inline-flex min-h-11 items-center text-zinc-400 underline-offset-4 hover:text-zinc-100 hover:underline" href={sitePath(localizedPath(locale, '/privacy'))}>{isEnglish ? 'Privacy Policy' : '隐私政策'}</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: pathname })}></script>

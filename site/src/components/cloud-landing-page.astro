@@ -1,0 +1,288 @@
+---
+import {
+  ArrowRight,
+  Check,
+  Cloud,
+  KeyRound,
+  LockKeyhole,
+  MonitorSmartphone,
+  Network,
+  QrCode,
+  Server,
+  ShieldCheck,
+  Smartphone,
+} from 'lucide-react'
+
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
+import { localizedPath, sitePath, type Locale } from '@/lib/site'
+import { cn } from '@/lib/utils'
+
+interface Props { locale: Locale }
+const { locale } = Astro.props
+
+const copy = {
+  en: {
+    eyebrow: 'Optional managed connectivity for AnyTTY',
+    lead: 'Reach persistent terminals on computers behind NAT. Cloud discovers the paired endpoint, tries a direct P2P path first, and relays encrypted traffic only when the network requires it.',
+    openConsole: 'Open Cloud console', docs: 'Read Cloud docs', pricingLink: 'See pricing',
+    proof: 'Works with the open-source AnyTTY clients and daemon',
+    routeLabel: 'The Cloud connection path', client: 'Paired client', discovery: 'Cloud discovery', daemon: 'Endpoint daemon',
+    direct: 'Direct P2P when possible', relay: 'Encrypted Relay fallback',
+    explainEyebrow: 'How it works', explainTitle: 'One route to the machine you already trust.',
+    explainLead: 'Cloud handles reachability. Pairing, terminal access, and file permissions still belong to the endpoint you control.',
+    steps: [
+      ['Register the daemon', 'Sign in to Cloud, create a one-time enrollment command, and run it on the computer you want to reach.'],
+      ['Pair the client', 'Scan the QR code produced by the target service. Each client keeps its paired endpoints on that device.'],
+      ['Connect from anywhere', 'Cloud negotiates P2P first and switches to an encrypted Relay only when direct networking fails.'],
+    ],
+    productEyebrow: 'AnyTTY stays AnyTTY', productTitle: 'Cloud changes how you reach the terminal, not where the work runs.',
+    productLead: 'Your shells, coding agents, and files remain on the endpoint daemon. Move between the TUI, web, phone, and tablet without moving the task itself.',
+    desktopAlt: 'AnyTTY workspace with persistent terminals running across several computers',
+    mobileAlt: 'AnyTTY mobile client connected to a persistent terminal',
+    desktopCaption: 'The same persistent workspace on the endpoint', mobileCaption: 'Continue from a paired phone',
+    productPoints: [
+      ['No App account sync', 'The mobile app does not populate devices from a Cloud account. Pair each client with the target service.'],
+      ['Endpoint-controlled access', 'The daemon authenticates the connection and decides which terminals and files are available.'],
+      ['Encrypted transport', 'Relay infrastructure forwards encrypted traffic and is not designed to read terminal or file contents.'],
+    ],
+    pricingEyebrow: 'Pricing', pricingTitle: 'Start free. Add Cloud capacity when you need it.',
+    pricingLead: 'Every plan includes managed discovery, P2P negotiation, and Relay fallback. Direct and SSH connections do not require a Cloud subscription.',
+    monthly: 'month', yearly: 'year', free: 'Free', popular: 'Most useful for one person', choose: 'Choose', start: 'Start free',
+    planFeatures: {
+      daemons: (count: number) => `${count} registered daemons`,
+      p2p: 'Managed P2P included',
+      relay: (count: number) => `${count} concurrent Relay connection${count === 1 ? '' : 's'}`,
+      data: (amount: string) => `${amount} Relay traffic per period`,
+    },
+    priceNote: 'Prices are shown in CNY. Applicable taxes and the final total are shown at checkout. Paid subscriptions can be canceled from the Cloud account and remain active through the current billing period.',
+    securityEyebrow: 'Security boundary', securityTitle: 'Cloud can route a connection. It cannot grant terminal access.',
+    securityLead: 'A Cloud account manages daemon enrollment, routing, Relay capacity, usage, and billing. It does not replace endpoint pairing or daemon authorization.',
+    securityItems: [
+      ['Pairing stays explicit', 'A user must scan a claim from the target service before that client can connect.'],
+      ['Permissions stay local', 'The endpoint daemon enforces terminal and file access inside the encrypted connection.'],
+      ['Subscriptions stay manageable', 'View usage, change plans, and cancel renewal directly from the Cloud console.'],
+    ],
+    ctaTitle: 'Connect the computer that is hard to reach.',
+    ctaLead: 'Create a free Cloud account, register one daemon, and keep using the AnyTTY clients you already have.',
+    cta: 'Open Cloud console', ctaDocs: 'Review the security model',
+  },
+  'zh-CN': {
+    eyebrow: 'AnyTTY 的可选托管连接服务',
+    lead: '连接位于 NAT 或内网中的持久终端。Cloud 先发现已配对的 endpoint，优先协商 P2P 直连，只有网络无法直连时才通过 Relay 转发加密流量。',
+    openConsole: '进入 Cloud 控制台', docs: '阅读 Cloud 文档', pricingLink: '查看价格',
+    proof: '与开源 AnyTTY 客户端及 daemon 配合使用',
+    routeLabel: 'Cloud 连接路径', client: '已配对客户端', discovery: 'Cloud 发现与协商', daemon: 'Endpoint daemon',
+    direct: '网络允许时直接 P2P', relay: '无法直连时使用加密 Relay',
+    explainEyebrow: '工作方式', explainTitle: '找到你已经信任的那台机器。',
+    explainLead: 'Cloud 只解决网络可达性；配对、终端访问和文件权限仍由你控制的 endpoint 决定。',
+    steps: [
+      ['注册 daemon', '登录 Cloud，生成一次性接入命令，再在需要远程访问的电脑上运行。'],
+      ['配对客户端', '扫描目标服务生成的二维码。每个客户端只在当前设备保存自己配对的 endpoint。'],
+      ['随时连接', 'Cloud 优先协商 P2P；只有直连失败时，才自动切换到加密 Relay。'],
+    ],
+    productEyebrow: 'AnyTTY 仍然是 AnyTTY', productTitle: 'Cloud 改变的是连接路径，不是任务运行的位置。',
+    productLead: 'Shell、编程 Agent 和文件仍在 endpoint daemon 上运行。你可以在 TUI、Web、手机和平板之间切换，而无需迁移任务。',
+    desktopAlt: 'AnyTTY 工作台同时显示多台电脑上的持久终端',
+    mobileAlt: 'AnyTTY 手机客户端连接到持久终端',
+    desktopCaption: '任务仍在 endpoint 的持久工作台中', mobileCaption: '从已配对手机继续操作',
+    productPoints: [
+      ['App 不做账号同步', '移动 App 不会从 Cloud 账号自动填充设备；每个客户端都要与目标服务明确配对。'],
+      ['访问权由 endpoint 决定', 'daemon 负责验证连接，并决定可以访问哪些终端和文件。'],
+      ['传输内容保持加密', 'Relay 基础设施只转发加密流量，其设计不能读取终端或文件内容。'],
+    ],
+    pricingEyebrow: '套餐价格', pricingTitle: '先免费使用，需要时再增加 Cloud 容量。',
+    pricingLead: '每个套餐都包含托管发现、P2P 协商和 Relay 兜底。Direct 与 SSH 连接不需要 Cloud 订阅。',
+    monthly: '月', yearly: '年', free: '免费', popular: '适合长期个人使用', choose: '选择', start: '免费开始',
+    planFeatures: {
+      daemons: (count: number) => `${count} 个已注册 daemon`,
+      p2p: '包含托管 P2P',
+      relay: (count: number) => `${count} 路 Relay 并发`,
+      data: (amount: string) => `每周期 ${amount} Relay 流量`,
+    },
+    priceNote: '价格以人民币显示，适用税费和最终总额会在结账页面列明。付费订阅可在 Cloud 账号中取消续订，并继续使用到当前计费周期结束。',
+    securityEyebrow: '安全边界', securityTitle: 'Cloud 可以建立路径，但不能授予终端权限。',
+    securityLead: 'Cloud 账号用于 daemon 接入、路由、Relay 容量、用量和账单管理，不会代替 endpoint 配对和 daemon 授权。',
+    securityItems: [
+      ['必须明确配对', '客户端只有扫描目标服务生成的配对凭据后才能发起连接。'],
+      ['权限留在本机', 'endpoint daemon 在加密连接内执行终端和文件权限检查。'],
+      ['订阅可以自助管理', '用户可以直接在 Cloud 控制台查看用量、更换套餐并取消续订。'],
+    ],
+    ctaTitle: '连接那台藏在内网里的电脑。',
+    ctaLead: '创建免费的 Cloud 账号，注册一台 daemon，然后继续使用你已有的 AnyTTY 客户端。',
+    cta: '进入 Cloud 控制台', ctaDocs: '查看安全模型',
+  },
+} as const
+
+const plans = [
+  { name: 'Cloud Free', monthly: 0, yearly: 0, daemons: 2, relay: 1, data: '200 MB', featured: false },
+  { name: 'Personal Pro', monthly: 68, yearly: 648, daemons: 10, relay: 3, data: '20 GB', featured: true },
+  { name: 'Power User', monthly: 138, yearly: 1288, daemons: 30, relay: 8, data: '100 GB', featured: false },
+] as const
+
+const t = copy[locale]
+const docsPath = sitePath(localizedPath(locale, '/docs/cloud'))
+const securityPath = sitePath(localizedPath(locale, '/docs/security'))
+const consoleUrl = 'https://cloud.anytty.com/login'
+---
+
+<main id="main">
+  <section class="relative isolate min-h-[calc(100svh-7rem)] overflow-hidden border-b border-white/10 bg-zinc-950 text-zinc-50" aria-labelledby="cloud-hero-title">
+    <img
+      class="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-40"
+      src={sitePath('/assets/product/mac-tui.webp')}
+      alt=""
+      width="1800"
+      height="1125"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 -z-10 bg-zinc-950/75" aria-hidden="true"></div>
+
+    <div class="mx-auto flex min-h-[calc(100svh-7rem)] max-w-7xl flex-col justify-between gap-6 px-5 py-6 sm:gap-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
+      <div class="max-w-4xl">
+        <Badge variant="secondary" className="border border-white/10 bg-white/10 font-mono text-[11px] font-normal text-zinc-100 shadow-none">{t.eyebrow}</Badge>
+        <h1 id="cloud-hero-title" class="mt-6 text-5xl font-semibold leading-none tracking-normal sm:text-7xl lg:text-8xl">AnyTTY Cloud</h1>
+        <p class="mt-6 max-w-3xl text-base leading-7 text-zinc-300 sm:text-xl sm:leading-8">{t.lead}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'min-h-11 bg-sky-500 px-5 font-medium text-white hover:bg-sky-400')} href={consoleUrl}>
+            <Cloud aria-hidden="true" />{t.openConsole}<ArrowRight aria-hidden="true" />
+          </a>
+          <a class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'min-h-11 border-white/20 bg-zinc-950/70 px-5 font-medium text-zinc-100 shadow-none hover:bg-white/10 hover:text-white')} href={docsPath}>{t.docs}</a>
+          <a class="inline-flex min-h-11 items-center px-3 text-sm font-medium text-zinc-300 underline-offset-4 hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring" href="#pricing">{t.pricingLink}</a>
+        </div>
+        <p class="mt-5 flex items-center gap-2 text-sm text-zinc-400"><ShieldCheck className="size-4 text-emerald-300" aria-hidden="true" />{t.proof}</p>
+      </div>
+
+      <div class="overflow-hidden rounded-lg border border-white/15 bg-zinc-950/85 backdrop-blur-md" aria-label={t.routeLabel}>
+        <div class="grid grid-cols-3 gap-px bg-white/10 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
+          <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><Smartphone className="size-5 text-sky-300" aria-hidden="true" /><span class="text-xs font-medium sm:text-sm">{t.client}</span></div>
+          <div class="hidden items-center bg-zinc-950/90 px-2 text-zinc-600 md:flex" aria-hidden="true"><ArrowRight className="size-4" /></div>
+          <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><Network className="size-5 text-emerald-300" aria-hidden="true" /><span class="text-xs font-medium sm:text-sm">{t.discovery}</span></div>
+          <div class="hidden items-center bg-zinc-950/90 px-2 text-zinc-600 md:flex" aria-hidden="true"><ArrowRight className="size-4" /></div>
+          <div class="flex min-h-16 flex-col items-center justify-center gap-2 bg-zinc-950/90 px-2 py-3 text-center sm:min-h-20 sm:flex-row sm:gap-3 sm:px-5 sm:text-left"><Server className="size-5 text-zinc-200" aria-hidden="true" /><span class="text-xs font-medium sm:text-sm">{t.daemon}</span></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 px-4 py-3 font-mono text-[11px] text-zinc-400 sm:px-5">
+          <span class="flex items-center gap-2"><span class="size-1.5 rounded-full bg-emerald-300"></span>{t.direct}</span>
+          <span class="flex items-center gap-2"><LockKeyhole className="size-3.5 text-sky-300" aria-hidden="true" />{t.relay}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-how-title">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+      <div class="max-w-3xl">
+        <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.explainEyebrow}</Badge>
+        <h2 id="cloud-how-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.explainTitle}</h2>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-zinc-400">{t.explainLead}</p>
+      </div>
+      <div class="mt-12 grid border-y border-[var(--line)] md:grid-cols-3">
+        {t.steps.map(([title, body], index) => (
+          <article class="relative py-7 md:px-7 md:first:pl-0 md:last:pr-0 md:[&+&]:border-l md:[&+&]:border-[var(--line)]">
+            <span class="font-mono text-[11px] text-sky-400">0{index + 1}</span>
+            <h3 class="mt-5 text-lg font-medium">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-zinc-400">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-product-title">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+      <div class="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
+        <div>
+          <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.productEyebrow}</Badge>
+          <h2 id="cloud-product-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.productTitle}</h2>
+          <p class="mt-5 text-base leading-7 text-zinc-400">{t.productLead}</p>
+          <div class="mt-8 grid gap-5">
+            {t.productPoints.map(([title, body], index) => {
+              const Icon = [QrCode, KeyRound, LockKeyhole][index]
+              return <div class="grid grid-cols-[auto_1fr] gap-4 border-t border-[var(--line)] pt-5">
+                <Icon className="mt-0.5 size-5 text-sky-400" aria-hidden="true" />
+                <div><h3 class="text-sm font-medium">{title}</h3><p class="mt-1 text-sm leading-6 text-zinc-400">{body}</p></div>
+              </div>
+            })}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-[minmax(0,1fr)_minmax(92px,0.26fr)] items-end gap-3 sm:gap-5">
+          <figure class="overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)]">
+            <img class="block aspect-[1800/1125] w-full object-cover" src={sitePath('/assets/product/mac-tui.webp')} alt={t.desktopAlt} width="1800" height="1125" loading="lazy" />
+            <figcaption class="border-t border-[var(--line)] px-4 py-3 font-mono text-[10px] text-zinc-400">{t.desktopCaption}</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-lg bg-zinc-950 ring-1 ring-[var(--line-strong)]">
+            <img class="block aspect-[480/1068] w-full object-cover" src={sitePath('/assets/product/mobile-terminal.webp')} alt={t.mobileAlt} width="480" height="1068" loading="lazy" />
+            <figcaption class="hidden border-t border-[var(--line)] px-3 py-3 font-mono text-[9px] text-zinc-400 sm:block">{t.mobileCaption}</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="scroll-mt-20 py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-pricing-title">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+      <div class="max-w-3xl">
+        <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.pricingEyebrow}</Badge>
+        <h2 id="cloud-pricing-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.pricingTitle}</h2>
+        <p class="mt-5 max-w-2xl text-base leading-7 text-zinc-400">{t.pricingLead}</p>
+      </div>
+
+      <div class="mt-12 grid gap-4 lg:grid-cols-3">
+        {plans.map((plan) => (
+          <article class={cn('flex min-w-0 flex-col rounded-lg border bg-card p-6', plan.featured ? 'border-sky-400/60 shadow-[0_0_0_1px_rgba(56,189,248,0.16)]' : 'border-[var(--line)]')}>
+            <div class="flex min-h-7 items-start justify-between gap-3">
+              <h3 class="text-lg font-medium">{plan.name}</h3>
+              {plan.featured && <span class="rounded-md bg-sky-400/10 px-2 py-1 font-mono text-[10px] text-sky-400">{t.popular}</span>}
+            </div>
+            <div class="mt-7 min-h-16">
+              {plan.monthly === 0
+                ? <strong class="text-4xl font-semibold tracking-normal">{t.free}</strong>
+                : <><strong class="text-4xl font-semibold tracking-normal">¥{plan.monthly}</strong><span class="ml-1 text-sm text-zinc-400">/ {t.monthly}</span><p class="mt-2 font-mono text-[11px] text-zinc-500">¥{plan.yearly} / {t.yearly}</p></>}
+            </div>
+            <ul class="mt-7 grid gap-3 border-t border-[var(--line)] pt-6 text-sm text-zinc-400">
+              {[t.planFeatures.daemons(plan.daemons), t.planFeatures.p2p, t.planFeatures.relay(plan.relay), t.planFeatures.data(plan.data)].map((feature) => (
+                <li class="flex gap-2.5"><Check className="mt-0.5 size-4 shrink-0 text-emerald-400" aria-hidden="true" /><span>{feature}</span></li>
+              ))}
+            </ul>
+            <a class={cn(buttonVariants({ variant: plan.featured ? 'default' : 'outline', size: 'lg' }), 'mt-8 min-h-11 w-full', plan.featured && 'bg-sky-500 text-white hover:bg-sky-400')} href={consoleUrl}>
+              {plan.monthly === 0 ? t.start : `${t.choose} ${plan.name}`}<ArrowRight aria-hidden="true" />
+            </a>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 max-w-4xl text-xs leading-5 text-zinc-500">{t.priceNote}</p>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--line-soft)] bg-zinc-950/30 py-20 sm:py-24 lg:py-28" aria-labelledby="cloud-security-title">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:px-12">
+      <div>
+        <Badge variant="secondary" className="border-0 bg-[var(--chip)] font-mono text-[11px] font-normal text-zinc-200">{t.securityEyebrow}</Badge>
+        <h2 id="cloud-security-title" class="mt-5 text-3xl font-medium leading-tight tracking-normal sm:text-4xl">{t.securityTitle}</h2>
+        <p class="mt-5 text-base leading-7 text-zinc-400">{t.securityLead}</p>
+      </div>
+      <div class="divide-y divide-[var(--line)] border-y border-[var(--line)]">
+        {t.securityItems.map(([title, body], index) => {
+          const Icon = [QrCode, ShieldCheck, MonitorSmartphone][index]
+          return <article class="grid grid-cols-[auto_1fr] gap-4 py-6">
+            <Icon className="mt-0.5 size-5 text-sky-400" aria-hidden="true" />
+            <div><h3 class="text-base font-medium">{title}</h3><p class="mt-2 text-sm leading-6 text-zinc-400">{body}</p></div>
+          </article>
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-zinc-950 py-20 text-zinc-50 sm:py-24" aria-labelledby="cloud-cta-title">
+    <div class="mx-auto max-w-4xl px-5 text-center sm:px-8">
+      <Cloud className="mx-auto size-8 text-sky-300" aria-hidden="true" />
+      <h2 id="cloud-cta-title" class="mt-6 text-3xl font-medium leading-tight tracking-normal sm:text-5xl">{t.ctaTitle}</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-zinc-400">{t.ctaLead}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a class={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'min-h-11 bg-sky-500 px-5 font-medium text-white hover:bg-sky-400')} href={consoleUrl}>{t.cta}<ArrowRight aria-hidden="true" /></a>
+        <a class={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'min-h-11 border-white/20 bg-transparent px-5 font-medium text-zinc-100 hover:bg-white/10 hover:text-white')} href={securityPath}>{t.ctaDocs}</a>
+      </div>
+    </div>
+  </section>
+</main>

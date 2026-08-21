@@ -1,0 +1,10 @@
+---
+import TermsOfService from '@/components/terms-of-service.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+const description = '适用于 AnyTTY 网站、软件、账号及可选 Cloud 托管服务的条款。'
+---
+
+<BaseLayout locale="zh-CN" title="服务条款" description={description} pathname="/zh-CN/terms/">
+  <TermsOfService locale="zh-CN" />
+</BaseLayout>

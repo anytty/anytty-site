@@ -1,0 +1,10 @@
+---
+import TermsOfService from '@/components/terms-of-service.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+const description = 'Terms governing AnyTTY websites, software, accounts, and optional managed Cloud services.'
+---
+
+<BaseLayout locale="en" title="Terms of Service" description={description} pathname="/terms/">
+  <TermsOfService locale="en" />
+</BaseLayout>
